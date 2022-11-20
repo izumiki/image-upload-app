@@ -4,7 +4,7 @@ import Login from '../components/account/Login'
 import Logout from '../components/account/Logout'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Admin() {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,8 +17,7 @@ export default function Home() {
         <h1 className='text-3xl font-bold underline'>
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
-
-        <Logout />
+        <Login />
 
         <p className={styles.description}>
           Get started by editing{' '}
