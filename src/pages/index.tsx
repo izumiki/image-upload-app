@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Login from '../components/account/Login'
-import Logout from '../components/account/Logout'
+import Login from '../components/account/auth/Login'
+import Logout from '../components/account/auth/Logout'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
 
-        <Logout />
+        <Login />
 
         <p className={styles.description}>
           Get started by editing{' '}

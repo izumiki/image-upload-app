@@ -1,4 +1,4 @@
-import supabase from '../../utils/supabaseClient'
+import supabase from '../../../utils/supabaseClient'
 
 const Login = () => {
   const login = async () => {
@@ -6,7 +6,7 @@ const Login = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-        redirectTo: '/index'
+        redirectTo: 'http://localhost:3000/admin'
       }}) 
       if (error) throw error
     } catch (error) {
