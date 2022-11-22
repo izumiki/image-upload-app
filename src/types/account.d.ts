@@ -15,3 +15,30 @@ export type Accounts = {
   created_at: Date
   updated_at: Date
 }
+
+export type AccountFormValues = {
+  email: string
+  username: string
+  profile: string
+  avatar_src: string
+  avatar_image: FileList
+}
+
+export type AccountFormProps = {
+  label: string
+  type: string
+  name: 'email' | 'username' | 'profile' | 'avatar_src'
+  register: UseFormRegister<AccountFormValues>
+  formState: FormState<AccountFormValues>
+  options: Object
+}
+
+export type AvatarProps = {
+  avatarSrc: string
+  avatarSide: number
+  name: 'avatar_image'
+  // setAvatarSrc: () => void
+  register: UseFormRegister<AccountFormValues>
+  formState: FormState<AccountFormValues>
+  options: Object
+}

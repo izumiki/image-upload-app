@@ -1,21 +1,5 @@
 import { FormState, UseFormRegister } from 'react-hook-form'
-
-export type AccountFormValues = {
-  email: string
-  username: string
-  profile: string
-  avatar_src: string
-  avatar_image: FileList
-}
-
-export type AccountFormProps = {
-  label: string
-  type: string
-  name: string
-  register: UseFormRegister
-  formState: FormState
-  options: Object
-}
+import { AccountFormProps } from '../../types/account'
 
 const Form = ({
   label,
@@ -41,7 +25,12 @@ const Form = ({
       <input
         id={name}
         type={type}
-        className='focus:shadow-outline w-full rounded border py-2 px-12 text-gray-700 shadow focus:outline-none'
+        className={`w-full rounded border py-2 px-4 text-gray-800 shadow 
+        ${
+          error
+            ? 'border-red-400 focus:outline-none focus:ring focus:ring-red-400'
+            : 'focus:outline-none focus:ring focus:ring-teal-200'
+        }`}
         {...register(name, options)}
       />
     </div>

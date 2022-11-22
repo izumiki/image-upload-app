@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { AccountProps } from '../../types/account'
 import { AccountFormValues } from '../../types/form'
 import Form from './AccountForm'
+import Avatar from './Avatar'
 import { updateAccount } from './connectAccountScheme'
 
 const Account = ({ account }: { account: AccountProps }) => {
@@ -14,10 +15,18 @@ const Account = ({ account }: { account: AccountProps }) => {
     },
   })
 
-  console.log('defaultvalues', formState.defaultValues)
+  // console.log('defaultvalues', formState.defaultValues)
 
   return (
     <form onSubmit={handleSubmit(updateAccount)}>
+      <Avatar
+        avatarSrc={account.avatarSrc}
+        avatarSide={250}
+        name='avatar_image'
+        register={register}
+        formState={formState}
+        options={{ required: true }}
+      />
       <Form
         label='名前'
         type='text'
@@ -37,7 +46,7 @@ const Account = ({ account }: { account: AccountProps }) => {
 
       <input
         type='submit'
-        className='focus:shadow-outline rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700 focus:outline-none'
+        className='rounded bg-teal-500 py-2 px-4 font-bold text-white hover:bg-teal-700 focus:outline-none'
       />
     </form>
   )

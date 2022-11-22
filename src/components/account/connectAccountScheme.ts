@@ -52,3 +52,11 @@ export const updateAccount = async (data: AccountFormValues) => {
     console.error(error)
   }
 }
+
+// export const uploadImage = async (
+//   bucket: string, 
+//   user: User, 
+//   file: File | Blob 
+//   ) => {
+
+//   }
