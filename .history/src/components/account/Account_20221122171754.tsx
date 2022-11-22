@@ -14,10 +14,18 @@ const Account = ({ account }: { account: AccountProps }) => {
     },
   })
 
-  console.log('defaultvalues', formState.defaultValues)
+  console.log(formState.defaultValues)
 
   return (
     <form onSubmit={handleSubmit(updateAccount)}>
+      <Form
+        label='email'
+        type='text'
+        name='email'
+        register={register}
+        formState={formState}
+        options={{ required: true }}
+      />
       <Form
         label='名前'
         type='text'

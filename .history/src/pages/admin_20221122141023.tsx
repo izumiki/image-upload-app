@@ -18,6 +18,7 @@ export default function Admin() {
     if (user) {
       fetchAccount(user).then((res) => {
         setAccount(res)
+        console.log('account', res)
         setLoading(false)
       })
     }
@@ -32,7 +33,9 @@ export default function Admin() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className='mb-12 text-3xl font-bold '>Admin Page</h1>
+        <h1 className='text-3xl font-bold underline'>
+          Welcome to <a href='https://nextjs.org'>Next.js!</a>
+        </h1>
 
         {!loading && <Account account={account} />}
       </main>

@@ -37,17 +37,18 @@ export const fetchAccount = async (user: User) => {
 }
 
 export const updateAccount = async (data: AccountFormValues) => {
-  try {
-    console.log('data', data)
-    const { error } = await supabase
-      .from<Accounts>('accounts')
-      .update({
-        name: data.username,
-        profile: data.profile,
-      })
-      .eq('email', data.email)
+  console.log('data', data)
+  const updates = {
+    name: data.username,
+    profile: data.profile,
+  }
 
-    if (error) throw error
+  try {
+    const { error } = await supabase.from<Accounts>('accounts').update(updates)
+    console.error(error?.details)
+    console.error(error?.message)
+
+    if (error) console.error(error.message)
   } catch (error) {
     console.error(error)
   }

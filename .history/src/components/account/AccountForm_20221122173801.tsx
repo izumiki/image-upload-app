@@ -23,7 +23,7 @@ const Form = ({
   name,
   register,
   formState,
-  options,
+  rules,
 }: AccountFormProps) => {
   const { errors } = formState
   const error = errors[name]

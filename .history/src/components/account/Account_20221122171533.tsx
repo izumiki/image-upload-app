@@ -11,13 +11,22 @@ const Account = ({ account }: { account: AccountProps }) => {
       username: account.username,
       profile: account.profile,
       avatar_src: account.avatarSrc,
+      avatar_image: undefined,
     },
   })
 
-  console.log('defaultvalues', formState.defaultValues)
+  console.log(formState.defaultValues)
 
   return (
     <form onSubmit={handleSubmit(updateAccount)}>
+      <Form
+        label='email'
+        type='text'
+        name='email'
+        register={register}
+        formState={formState}
+        options={{ disabled: true }}
+      />
       <Form
         label='名前'
         type='text'

@@ -8,17 +8,7 @@ export const fetchAccount = async (user: User) => {
   try {
     const { data, error } = await supabase
       .from<Accounts>('accounts')
-      .select(
-        `
-        id, 
-        email, 
-        name, 
-        profile, 
-        avatar_src, 
-        updated_at, 
-        created_at
-      `,
-      )
+      .select('id, email, name, profile, avatar_src, updated_at, created_at')
       .eq('id', user.id)
       .single()
 
@@ -37,17 +27,14 @@ export const fetchAccount = async (user: User) => {
 }
 
 export const updateAccount = async (data: AccountFormValues) => {
+  console.log(data)
   try {
-    console.log('data', data)
-    const { error } = await supabase
-      .from<Accounts>('accounts')
-      .update({
-        name: data.username,
-        profile: data.profile,
-      })
-      .eq('email', data.email)
+    const { error } = await supabase.from<Accounts>('accounts').update({
+      name: data.username,
+      profile: data.profile,
+    })
 
-    if (error) throw error
+    if (error) console.error(error.message)
   } catch (error) {
     console.error(error)
   }

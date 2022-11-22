@@ -14,7 +14,7 @@ export type AccountFormProps = {
   name: string
   register: UseFormRegister
   formState: FormState
-  options: Object
+  rules: Object
 }
 
 const Form = ({
@@ -23,27 +23,25 @@ const Form = ({
   name,
   register,
   formState,
-  options,
+  rules,
 }: AccountFormProps) => {
   const { errors } = formState
-  const error = errors[name]
+  console.log('error', formState.errors)
   return (
-    <div className='mb-4'>
-      <label
-        htmlFor={name}
-        className='mb-1 block text-sm font-bold text-gray-700'
+    <div className="mb-4">
+      <label 
+        htmlFor={label} 
+        className='block text-gray-700 text-sm font-bold mb-2'
       >
-        {label}{' '}
-        {error && (
-          <span className='inline text-red-500'>入力してください!</span>
-        )}
+      {label}
       </label>
-      <input
+      <input 
         id={name}
-        type={type}
-        className='focus:shadow-outline w-full rounded border py-2 px-12 text-gray-700 shadow focus:outline-none'
-        {...register(name, options)}
+        type={type} 
+        className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+        {...register(name, rules)} 
       />
+      {formState.errors. && <p>This {name} field is required</p>}
     </div>
 
     // {formState.errors && <p>This field is required</p>}

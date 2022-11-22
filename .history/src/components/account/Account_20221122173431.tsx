@@ -19,6 +19,14 @@ const Account = ({ account }: { account: AccountProps }) => {
   return (
     <form onSubmit={handleSubmit(updateAccount)}>
       <Form
+        label='email'
+        type='text'
+        name='email'
+        register={register}
+        formState={formState}
+        options={{ disabled: false }}
+      />
+      <Form
         label='名前'
         type='text'
         name='username'

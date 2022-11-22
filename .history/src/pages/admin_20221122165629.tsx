@@ -18,6 +18,7 @@ export default function Admin() {
     if (user) {
       fetchAccount(user).then((res) => {
         setAccount(res)
+        console.log('account', res)
         setLoading(false)
       })
     }

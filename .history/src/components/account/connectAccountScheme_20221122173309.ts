@@ -38,7 +38,6 @@ export const fetchAccount = async (user: User) => {
 
 export const updateAccount = async (data: AccountFormValues) => {
   try {
-    console.log('data', data)
     const { error } = await supabase
       .from<Accounts>('accounts')
       .update({

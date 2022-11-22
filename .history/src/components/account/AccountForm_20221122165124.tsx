@@ -14,7 +14,7 @@ export type AccountFormProps = {
   name: string
   register: UseFormRegister
   formState: FormState
-  options: Object
+  rules: Object
 }
 
 const Form = ({
@@ -23,7 +23,7 @@ const Form = ({
   name,
   register,
   formState,
-  options,
+  rules,
 }: AccountFormProps) => {
   const { errors } = formState
   const error = errors[name]
@@ -35,14 +35,16 @@ const Form = ({
       >
         {label}{' '}
         {error && (
-          <span className='inline text-red-500'>入力してください!</span>
+          <span className='inline text-red-700'>
+            !{label} を入力してください.
+          </span>
         )}
       </label>
       <input
         id={name}
         type={type}
         className='focus:shadow-outline w-full rounded border py-2 px-12 text-gray-700 shadow focus:outline-none'
-        {...register(name, options)}
+        {...register(name, rules)}
       />
     </div>
 

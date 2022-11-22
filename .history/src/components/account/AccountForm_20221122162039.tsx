@@ -12,9 +12,9 @@ export type AccountFormProps = {
   label: string
   type: string
   name: string
-  register: UseFormRegister
-  formState: FormState
-  options: Object
+  register: UseFormRegister<AccountFormValues>
+  formState: FormState<AccountFormValues>
+  rules: Object
 }
 
 const Form = ({
@@ -23,27 +23,28 @@ const Form = ({
   name,
   register,
   formState,
-  options,
+  rules,
 }: AccountFormProps) => {
+  const registerName = name
+  console.log('name', name)
   const { errors } = formState
-  const error = errors[name]
+  const error = formState.errors[name]
+  console.log('errors', formState.errors)
   return (
     <div className='mb-4'>
       <label
         htmlFor={name}
-        className='mb-1 block text-sm font-bold text-gray-700'
+        className='mb-2 block text-sm font-bold text-gray-700'
       >
-        {label}{' '}
-        {error && (
-          <span className='inline text-red-500'>入力してください!</span>
-        )}
+        {label}
       </label>
       <input
         id={name}
         type={type}
-        className='focus:shadow-outline w-full rounded border py-2 px-12 text-gray-700 shadow focus:outline-none'
-        {...register(name, options)}
+        className='focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+        {...register(name, rules)}
       />
+      {formState.errors[name] && <p>This {label} field is required</p>}
     </div>
 
     // {formState.errors && <p>This field is required</p>}

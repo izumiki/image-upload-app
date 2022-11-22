@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 import { AccountProps } from '../../types/account'
 import { AccountFormValues } from '../../types/form'
 import Form from './AccountForm'
-import { updateAccount } from './connectAccountScheme'
 
 const Account = ({ account }: { account: AccountProps }) => {
   const { register, handleSubmit, formState } = useForm<AccountFormValues>({
@@ -11,20 +10,29 @@ const Account = ({ account }: { account: AccountProps }) => {
       username: account.username,
       profile: account.profile,
       avatar_src: account.avatarSrc,
+      avatar_image: undefined,
     },
   })
 
-  console.log('defaultvalues', formState.defaultValues)
+  const onSubmit = (data) => console.log(data)
 
   return (
-    <form onSubmit={handleSubmit(updateAccount)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        label={'email'}
+        type='text'
+        name={'email'}
+        register={register}
+        formState={formState}
+        rules={{ disabled: true }}
+      />
       <Form
         label='名前'
         type='text'
         name='username'
         register={register}
         formState={formState}
-        options={{ required: true }}
+        rules={{ required: true }}
       />
       <Form
         label='プロフィール'
@@ -32,7 +40,7 @@ const Account = ({ account }: { account: AccountProps }) => {
         name='profile'
         register={register}
         formState={formState}
-        options={{ required: true }}
+        rules={{ required: true }}
       />
 
       <input
