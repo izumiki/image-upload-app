@@ -1,4 +1,4 @@
-export interface Account {
+export interface AccountProps {
   id: string
   email: string
   username: string

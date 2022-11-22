@@ -1,11 +1,8 @@
 import { User } from '@supabase/supabase-js'
-import { Account, Accounts } from '../../types/account'
+import { AccountProps, Accounts } from '../../types/account'
 import supabase from '../../utils/supabaseClient'
 
-
-export const fetchAccount = async (
-  user: User
-  ) => {
+export const fetchAccount = async (user: User) => {
   try {
     const { data, error } = await supabase
       .from<Accounts>('accounts')
@@ -14,15 +11,14 @@ export const fetchAccount = async (
       .single()
 
     if (error) throw error
-    const account: Account = {
+    const account: AccountProps = {
       id: data?.id,
       email: data?.email,
       username: data?.name,
       profile: data?.profile,
-      avatarSrc: data?.avatar_src
-      }
+      avatarSrc: data?.avatar_src,
+    }
     return account
-
   } catch (error) {
     console.error(error)
   }

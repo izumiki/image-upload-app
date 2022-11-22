@@ -8,7 +8,7 @@ export type AccountFormValues = {
   avatar_image: FileList
 }
 
-export type AccountFormProps = {
+export type FormProps = {
   label: string
   type: string
   name: string

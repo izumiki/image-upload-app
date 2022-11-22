@@ -1,11 +1,29 @@
+import { useUser } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import Account from '../components/account/Account'
 import Login from '../components/account/auth/Login'
 import Logout from '../components/account/auth/Logout'
+import { fetchAccount } from '../components/account/connectAccountScheme'
 import styles from '../styles/Home.module.css'
+import { AccountProps } from '../types/account'
 
 export default function Admin() {
+  const user: User = useUser()
+  const [account, setAccount] = useState<AccountProps>()
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (user) {
+      fetchAccount(user).then((res) => {
+        setAccount(res)
+        console.log('account', res)
+        setLoading(false)
+      })
+    }
+  }, [user])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,21 +36,12 @@ export default function Admin() {
         <h1 className='text-3xl font-bold underline'>
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
-        <Logout />
-        <Account />
+
+        {!loading && <Account account={account} />}
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-          </span>
-        </a>
+        <Logout />
       </footer>
     </div>
   )
