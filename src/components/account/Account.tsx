@@ -14,7 +14,7 @@ const Account = ({ account }: { account: AccountProps }) => {
       profile: account.profile,
     },
   })
-  
+
   return (
     <form onSubmit={handleSubmit((e) => console.log(e))}>
       <h1 className='mb-12 text-3xl font-bold '>Admin Page</h1>

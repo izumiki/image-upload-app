@@ -3,24 +3,21 @@ import { centerCrop, makeAspectCrop, PercentCrop } from 'react-image-crop'
 
 export const cropCenter = (width: number, height: number, aspect: number) => {
   return centerCrop(
-    makeAspectCrop({unit: '%', width: 100}, aspect, width, height), 
-      width, 
-      height
+    makeAspectCrop({ unit: '%', width: 100 }, aspect, width, height),
+    width,
+    height
   )
 }
 
-export async function cropImage(
-  src: string,
-  completedCrop: PercentCrop,
-) {
+export async function cropImage(src: string, completedCrop: PercentCrop) {
   const image: HTMLImageElement = new Image()
   image.src = src
-  const croppedImageWidth: number = completedCrop.width * image.width / 100
-  const croppedImageHeight: number = completedCrop.height * image.height / 100
+  const croppedImageWidth: number = (completedCrop.width * image.width) / 100
+  const croppedImageHeight: number = (completedCrop.height * image.height) / 100
   const canvas: HTMLCanvasElement = document.createElement('canvas')
   canvas.width = croppedImageWidth
   canvas.height = croppedImageHeight
-  const ctx: CanvasRenderingContext2D = canvas.getContext ('2d')
+  const ctx: CanvasRenderingContext2D = canvas.getContext('2d')
   ctx.drawImage(
     image,
     0,
@@ -34,10 +31,14 @@ export async function cropImage(
   )
   console.log('canvas', canvas)
   console.log('ctx', ctx)
-  canvas.toBlob((result) => {
-    console.log(result)
-    return result
-  },'image/jpeg', 0.85)
+  canvas.toBlob(
+    (result) => {
+      console.log(result)
+      return result
+    },
+    'image/jpeg',
+    0.85
+  )
   // const scaleX = image.naturalWidth / image.width
   // const scaleY = image.naturalHeight / image.height
   // // devicePixelRatio slightly increases sharpness on retina devices
@@ -46,8 +47,6 @@ export async function cropImage(
   // // true to the images natural size.
   // const pixelRatio = window.devicePixelRatio
   // // const pixelRatio = 1
-
-
 
   // ctx.scale(pixelRatio, pixelRatio)
   // ctx.imageSmoothingQuality = 'high'

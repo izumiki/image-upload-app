@@ -3,25 +3,25 @@ import { centerCrop, makeAspectCrop, PercentCrop } from 'react-image-crop'
 
 export const cropCenter = (width: number, height: number, aspect: number) => {
   return centerCrop(
-    makeAspectCrop({unit: '%', width: 100}, aspect, width, height), 
-      width, 
-      height
+    makeAspectCrop({ unit: '%', width: 100 }, aspect, width, height),
+    width,
+    height
   )
 }
 
 export async function cropImage(
   src: string,
   setSrc: () => void,
-  completedCrop: PercentCrop,
+  completedCrop: PercentCrop
 ) {
   const image: HTMLImageElement = new Image()
   image.src = src
   console.log(image.width)
   console.log(completedCrop.width)
-  const croppedImageWidth: number = completedCrop.width * image.width / 100
-  const croppedImageHeight: number = completedCrop.height * image.height / 100
-  const croppedImageX = completedCrop.x * image.width / 100
-  const croppedImageY = completedCrop.y * image.height / 100
+  const croppedImageWidth: number = (completedCrop.width * image.width) / 100
+  const croppedImageHeight: number = (completedCrop.height * image.height) / 100
+  const croppedImageX = (completedCrop.x * image.width) / 100
+  const croppedImageY = (completedCrop.y * image.height) / 100
   const canvas: HTMLCanvasElement = document.createElement('canvas')
   console.log('crossOrigin', image.crossOrigin)
   canvas.width = croppedImageWidth
@@ -32,7 +32,7 @@ export async function cropImage(
   console.log('height: ', croppedImageHeight)
   console.log('x: ', croppedImageX)
   console.log('y: ', croppedImageY)
-  const ctx: CanvasRenderingContext2D = canvas.getContext ('2d')
+  const ctx: CanvasRenderingContext2D = canvas.getContext('2d')
   ctx.drawImage(
     image,
     croppedImageX,
@@ -45,11 +45,15 @@ export async function cropImage(
     croppedImageHeight
   )
 
-  canvas.toBlob((blob) => {
-    const newSrc = URL.createObjectURL(blob)
-    console.log(newSrc)
-    setSrc(newSrc)
-  },'image/avif', 0.85)
+  canvas.toBlob(
+    (blob) => {
+      const newSrc = URL.createObjectURL(blob)
+      console.log(newSrc)
+      setSrc(newSrc)
+    },
+    'image/avif',
+    0.85
+  )
   // const scaleX = image.naturalWidth / image.width
   // const scaleY = image.naturalHeight / image.height
   // // devicePixelRatio slightly increases sharpness on retina devices
@@ -58,8 +62,6 @@ export async function cropImage(
   // // true to the images natural size.
   // const pixelRatio = window.devicePixelRatio
   // // const pixelRatio = 1
-
-
 
   // ctx.scale(pixelRatio, pixelRatio)
   // ctx.imageSmoothingQuality = 'high'

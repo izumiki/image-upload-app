@@ -16,7 +16,9 @@ const Avatar = ({
 }: AvatarProps) => {
   const [src, setSrc] = useState<string>(avatarSrc)
   const [crop, setCrop] = useState<PercentCrop>(cropCenter(450, 450, 1 / 1))
-  const [completedCrop, setCompletedCrop] = useState<PercentCrop>(cropCenter(450, 450, 1 / 1))
+  const [completedCrop, setCompletedCrop] = useState<PercentCrop>(
+    cropCenter(450, 450, 1 / 1)
+  )
   const side: number = avatarSide
   const aspect = 1 / 1
 
@@ -67,14 +69,12 @@ const Avatar = ({
         />
       </label>
 
-      <ReactCrop 
-        crop={crop} 
+      <ReactCrop
+        crop={crop}
         aspect={aspect}
         onChange={(_, percentCrop) => {
           setCrop(percentCrop)
           console.log('completedCrop', completedCrop)
-
-
         }}
         onComplete={(_, percentCrop) => {
           setCompletedCrop(percentCrop)
@@ -83,7 +83,7 @@ const Avatar = ({
       >
         <img src={src} />
       </ReactCrop>
-      <button         
+      <button
         onClick={() => {
           console.log(completedCrop)
           cropImage(src, setSrc, completedCrop)
@@ -93,7 +93,8 @@ const Avatar = ({
           rounded bg-teal-500 py-2.5 px-2 
           font-bold text-white
           hover:bg-teal-700 focus:outline-none
-         `}>
+         `}
+      >
         OK
       </button>
     </div>
