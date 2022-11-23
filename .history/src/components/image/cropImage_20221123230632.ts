@@ -16,14 +16,11 @@ export async function cropImage(
 ) {
   const image: HTMLImageElement = new Image()
   image.src = src
-  console.log(image.width)
-  console.log(completedCrop.width)
   const croppedImageWidth: number = completedCrop.width * image.width / 100
   const croppedImageHeight: number = completedCrop.height * image.height / 100
   const croppedImageX = completedCrop.x * image.width / 100
-  const croppedImageY = completedCrop.y * image.height / 100
+  const croppedImageY = completedCrop.y * image.width / 100
   const canvas: HTMLCanvasElement = document.createElement('canvas')
-  console.log('crossOrigin', image.crossOrigin)
   canvas.width = croppedImageWidth
   canvas.height = croppedImageHeight
   console.log('canvas', canvas)
@@ -35,16 +32,17 @@ export async function cropImage(
   const ctx: CanvasRenderingContext2D = canvas.getContext ('2d')
   ctx.drawImage(
     image,
+    0,
+    0,
+    image.width,
+    image.height,
     croppedImageX,
     croppedImageY,
     croppedImageWidth,
-    croppedImageHeight,
-    0,
-    0,
-    croppedImageWidth,
     croppedImageHeight
   )
-
+  const base64Image = canvas.toDataURL('image/jpeg')
+  // console.log('image', base64Image)
   canvas.toBlob((blob) => {
     const newSrc = URL.createObjectURL(blob)
     console.log(newSrc)

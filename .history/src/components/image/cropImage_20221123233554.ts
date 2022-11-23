@@ -49,7 +49,7 @@ export async function cropImage(
     const newSrc = URL.createObjectURL(blob)
     console.log(newSrc)
     setSrc(newSrc)
-  },'image/jpeg', 0.85)
+  },'image/avif', 0.85)
   // const scaleX = image.naturalWidth / image.width
   // const scaleY = image.naturalHeight / image.height
   // // devicePixelRatio slightly increases sharpness on retina devices

@@ -23,7 +23,6 @@ export async function cropImage(
   const croppedImageX = completedCrop.x * image.width / 100
   const croppedImageY = completedCrop.y * image.height / 100
   const canvas: HTMLCanvasElement = document.createElement('canvas')
-  console.log('crossOrigin', image.crossOrigin)
   canvas.width = croppedImageWidth
   canvas.height = croppedImageHeight
   console.log('canvas', canvas)
@@ -37,14 +36,15 @@ export async function cropImage(
     image,
     croppedImageX,
     croppedImageY,
-    croppedImageWidth,
-    croppedImageHeight,
-    0,
-    0,
+    image.width,
+    image.height,
+    croppedImageX,
+    croppedImageY,
     croppedImageWidth,
     croppedImageHeight
   )
-
+  const base64Image = canvas.toDataURL('image/jpeg')
+  // console.log('image', base64Image)
   canvas.toBlob((blob) => {
     const newSrc = URL.createObjectURL(blob)
     console.log(newSrc)

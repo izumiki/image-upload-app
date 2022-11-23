@@ -73,15 +73,10 @@ const Avatar = ({
         onChange={(_, percentCrop) => {
           setCrop(percentCrop)
 
-
         }}
-        onComplete={(_, percentCrop) => {
-          setCompletedCrop(percentCrop)
-          console.log('width: ',  percentCrop.width * 600 / 100)
-          console.log('height: ', percentCrop.height * 600 /100)
-          console.log('x: ', percentCrop.x * 600 /100)
-          console.log('y: ', percentCrop.y * 600 /100)
-          console.log('completedCrop', percentCrop)
+        onComplete={(_, c) => {
+          setCompletedCrop(c)
+          console.log('completedCrop', completedCrop)
         }}
       >
         <img src={src} />
@@ -89,7 +84,7 @@ const Avatar = ({
       <button         
         onClick={() => {
           console.log(completedCrop)
-          cropImage(src, setSrc, completedCrop)
+          cropImage(src, completedCrop)
         }}
         className={`
           hover: mb-8 flex h-12 w-64  cursor-pointer justify-center 

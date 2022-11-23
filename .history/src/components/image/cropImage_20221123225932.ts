@@ -16,39 +16,29 @@ export async function cropImage(
 ) {
   const image: HTMLImageElement = new Image()
   image.src = src
-  console.log(image.width)
-  console.log(completedCrop.width)
   const croppedImageWidth: number = completedCrop.width * image.width / 100
   const croppedImageHeight: number = completedCrop.height * image.height / 100
-  const croppedImageX = completedCrop.x * image.width / 100
-  const croppedImageY = completedCrop.y * image.height / 100
   const canvas: HTMLCanvasElement = document.createElement('canvas')
-  console.log('crossOrigin', image.crossOrigin)
   canvas.width = croppedImageWidth
   canvas.height = croppedImageHeight
   console.log('canvas', canvas)
-  console.log('completedCrop', completedCrop)
-  console.log('width: ', croppedImageWidth)
-  console.log('height: ', croppedImageHeight)
-  console.log('x: ', croppedImageX)
-  console.log('y: ', croppedImageY)
   const ctx: CanvasRenderingContext2D = canvas.getContext ('2d')
   ctx.drawImage(
     image,
-    croppedImageX,
-    croppedImageY,
-    croppedImageWidth,
-    croppedImageHeight,
     0,
     0,
+    image.width,
+    image.height,
+    completedCrop.x,
+    completedCrop.y,
     croppedImageWidth,
     croppedImageHeight
   )
-
+  const base64Image = canvas.toDataURL('image/jpeg')
+  // console.log('image', base64Image)
   canvas.toBlob((blob) => {
     const newSrc = URL.createObjectURL(blob)
-    console.log(newSrc)
-    setSrc(newSrc)
+    setSrc()
   },'image/jpeg', 0.85)
   // const scaleX = image.naturalWidth / image.width
   // const scaleY = image.naturalHeight / image.height

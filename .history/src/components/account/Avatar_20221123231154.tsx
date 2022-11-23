@@ -72,16 +72,13 @@ const Avatar = ({
         aspect={aspect}
         onChange={(_, percentCrop) => {
           setCrop(percentCrop)
+          console.log('completedCrop', completedCrop)
 
 
         }}
         onComplete={(_, percentCrop) => {
           setCompletedCrop(percentCrop)
-          console.log('width: ',  percentCrop.width * 600 / 100)
-          console.log('height: ', percentCrop.height * 600 /100)
-          console.log('x: ', percentCrop.x * 600 /100)
-          console.log('y: ', percentCrop.y * 600 /100)
-          console.log('completedCrop', percentCrop)
+          console.log('completedCrop', completedCrop)
         }}
       >
         <img src={src} />
