@@ -2,6 +2,7 @@ import { useUser } from '@supabase/auth-helpers-react'
 import { User } from '@supabase/supabase-js'
 import { AccountProps, Accounts } from '../../types/account'
 import supabase from '../../utils/supabaseClient'
+import { createPath, uploadImage } from '../image/connectDatabase'
 import { AccountFormValues } from './AccountForm'
 
 export const fetchAccount = async (user: User) => {
@@ -38,12 +39,27 @@ export const fetchAccount = async (user: User) => {
 
 export const updateAccount = async (data: AccountFormValues) => {
   try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    const userEmail: string = user?.email
+    const userStorageDir: string = userEmail.split('@')[0]
+    console.log(userStorageDir)
     console.log('data', data)
+    console.log(data.avatar_image.length)
+    const filePath: string = `${userStorageDir}/${createPath()}`
+    const avatarSrc: string = data.avatar_image.length
+      ? await uploadImage('avatars', filePath, data.avatar_image[0])
+      : undefined
+
+    console.log('avatarSrc', avatarSrc)
+
     const { error } = await supabase
       .from<Accounts>('accounts')
       .update({
         name: data.username,
         profile: data.profile,
+        avatar_src: avatarSrc,
       })
       .eq('email', data.email)
 
@@ -52,11 +68,3 @@ export const updateAccount = async (data: AccountFormValues) => {
     console.error(error)
   }
 }
-
-// export const uploadImage = async (
-//   bucket: string, 
-//   user: User, 
-//   file: File | Blob 
-//   ) => {
-
-//   }

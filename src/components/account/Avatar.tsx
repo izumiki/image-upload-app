@@ -10,11 +10,11 @@ const Avatar = ({
   formState,
   options,
 }: AvatarProps) => {
-  const [src, setSrc] = useState(avatarSrc)
-  const side = avatarSide
+  const [src, setSrc] = useState<string>(avatarSrc)
+  const side: number = avatarSide
 
   const handleAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files || !event.target.files.length) {
+    if ((!event.target.files || !event.target.files.length) && !src) {
       alert('ファイルを選択してください。')
       return
     }
@@ -28,7 +28,7 @@ const Avatar = ({
   }
 
   return (
-    <div className='mb-8 h-64 w-64'>
+    <div className='mb-24 h-64 w-64'>
       {src ? (
         <Image
           src={src}
