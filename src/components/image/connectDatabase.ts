@@ -4,7 +4,7 @@ import supabase from '../../utils/supabaseClient'
 export const uploadImage = async (
   bucket: string,
   filePath: string,
-  file: File | Blob,
+  file: File | Blob
 ) => {
   try {
     const { data: fileData, error } = await supabase.storage

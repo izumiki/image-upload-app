@@ -14,9 +14,9 @@ const Account = ({ account }: { account: AccountProps }) => {
       profile: account.profile,
     },
   })
-
+  
   return (
-    <form onSubmit={handleSubmit(updateAccount)}>
+    <form onSubmit={handleSubmit((e) => console.log(e))}>
       <h1 className='mb-12 text-3xl font-bold '>Admin Page</h1>
 
       <div className='flex flex-row gap-24'>
@@ -49,7 +49,8 @@ const Account = ({ account }: { account: AccountProps }) => {
           />
           <button
             type='submit'
-            className='w-1/3 rounded bg-teal-500 py-2 px-4 font-bold text-white hover:bg-teal-700 focus:outline-none'
+            className='w-1/3 rounded bg-teal-500 py-2 px-4 font-bold text-white
+              hover:bg-teal-700 focus:outline-none'
           >
             更新
           </button>

@@ -1,6 +1,10 @@
 import Image from 'next/image'
 import { ChangeEvent, useState } from 'react'
 import { AvatarProps } from '../../types/account'
+import { Crop, PercentCrop } from 'react-image-crop'
+import { cropCenter, cropImage } from '../image/cropImage'
+import ReactCrop from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 
 const Avatar = ({
   avatarSrc,
@@ -11,7 +15,10 @@ const Avatar = ({
   options,
 }: AvatarProps) => {
   const [src, setSrc] = useState<string>(avatarSrc)
+  const [crop, setCrop] = useState<PercentCrop>(cropCenter(450, 450, 1 / 1))
+  const [completedCrop, setCompletedCrop] = useState<PercentCrop>(cropCenter(450, 450, 1 / 1))
   const side: number = avatarSide
+  const aspect = 1 / 1
 
   const handleFile = async (event: ChangeEvent<HTMLInputElement>) => {
     if ((!event.target.files || !event.target.files.length) && !src) {
@@ -40,6 +47,7 @@ const Avatar = ({
       ) : (
         <div className={`mb-4 h-64 w-64 rounded-full bg-slate-700`} />
       )}
+
       <label
         htmlFor={name}
         className={`
@@ -58,6 +66,34 @@ const Avatar = ({
           {...register(name, { onChange: handleFile })}
         />
       </label>
+{/* 
+      <ReactCrop 
+        crop={crop} 
+        aspect={aspect}
+        onChange={(_, percentCrop) => {
+          setCrop(percentCrop)
+
+        }}
+        onComplete={(_, c) => {
+          setCompletedCrop(c)
+          console.log('completedCrop', completedCrop)
+        }}
+      >
+        <img src={src} />
+      </ReactCrop> */}
+      <button         
+        onClick={() => {
+          console.log(completedCrop)
+          cropImage(src, completedCrop)
+        }}
+        className={`
+          hover: mb-8 flex h-12 w-64  cursor-pointer justify-center 
+          rounded bg-teal-500 py-2.5 px-2 
+          font-bold text-white
+          hover:bg-teal-700 focus:outline-none
+         `}>
+        OK
+      </button>
     </div>
   )
 }

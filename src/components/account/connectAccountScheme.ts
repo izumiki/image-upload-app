@@ -1,9 +1,8 @@
 import { useUser } from '@supabase/auth-helpers-react'
 import { User } from '@supabase/supabase-js'
-import { AccountProps, Accounts } from '../../types/account'
+import { AccountProps, Accounts, AccountFormValues } from '../../types/account'
 import supabase from '../../utils/supabaseClient'
 import { createPath, uploadImage } from '../image/connectDatabase'
-import { AccountFormValues } from './AccountForm'
 
 export const fetchAccount = async (user: User) => {
   try {
@@ -18,7 +17,7 @@ export const fetchAccount = async (user: User) => {
         avatar_src, 
         updated_at, 
         created_at
-      `,
+      `
       )
       .eq('id', user.id)
       .single()

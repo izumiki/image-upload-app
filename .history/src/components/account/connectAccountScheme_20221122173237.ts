@@ -17,7 +17,7 @@ export const fetchAccount = async (user: User) => {
         avatar_src, 
         updated_at, 
         created_at
-      `,
+      `
       )
       .eq('id', user.id)
       .single()
