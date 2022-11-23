@@ -6,6 +6,7 @@ import Account from '../components/account/Account'
 import Login from '../components/account/auth/Login'
 import Logout from '../components/account/auth/Logout'
 import { fetchAccount } from '../components/account/connectAccountScheme'
+import Spinner from '../components/Sppiner'
 import styles from '../styles/Home.module.css'
 import { AccountProps } from '../types/account'
 
@@ -32,9 +33,7 @@ export default function Admin() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className='mb-12 text-3xl font-bold '>Admin Page</h1>
-
-        {!loading && <Account account={account} />}
+        {loading ? <Spinner /> : <Account account={account} />}
       </main>
 
       <footer className={styles.footer}>

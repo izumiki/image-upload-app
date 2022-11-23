@@ -13,7 +13,7 @@ const Avatar = ({
   const [src, setSrc] = useState<string>(avatarSrc)
   const side: number = avatarSide
 
-  const handleAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFile = async (event: ChangeEvent<HTMLInputElement>) => {
     if ((!event.target.files || !event.target.files.length) && !src) {
       alert('ファイルを選択してください。')
       return
@@ -35,7 +35,7 @@ const Avatar = ({
           alt='avatar'
           width={side}
           height={side}
-          className={`mb-4 h-64 w-64 rounded-full`}
+          className={`mb-4 h-64 w-64 rounded-full border-slate-700`}
         />
       ) : (
         <div className={`mb-4 h-64 w-64 rounded-full bg-slate-700`} />
@@ -49,14 +49,13 @@ const Avatar = ({
           hover:bg-teal-700 focus:outline-none
          `}
       >
-        {' '}
         Upload File
         <input
           type='file'
           id={name}
           className='hidden'
           accept='image/*'
-          {...register(name, { onChange: handleAvatar })}
+          {...register(name, { onChange: handleFile })}
         />
       </label>
     </div>

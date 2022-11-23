@@ -1,7 +1,6 @@
-import { FormState, UseFormRegister } from 'react-hook-form'
 import { AccountFormProps } from '../../types/account'
 
-const AccountForm = ({
+const AccountLargeForm = ({
   label,
   type,
   name,
@@ -22,10 +21,10 @@ const AccountForm = ({
           <span className='inline text-red-500'>入力してください!</span>
         )}
       </label>
-      <input
+      <textarea
         id={name}
         type={type}
-        className={`mb-2 block h-12 w-64 rounded border p-2 text-gray-800 shadow 
+        className={`mb-2 block h-48 w-64 resize-none rounded border p-2 text-gray-800 shadow 
         ${
           error
             ? 'border-red-400 focus:outline-none focus:ring focus:ring-red-400'
@@ -39,4 +38,4 @@ const AccountForm = ({
   )
 }
 
-export default AccountForm
+export default AccountLargeForm
