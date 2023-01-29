@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { AvatarProps } from '../../types/account'
 import 'react-image-crop/dist/ReactCrop.css'
 import CropModal from '../image/CropModal'
+// import { getImageSide } from '../image/cropImage'
 // import { getHeight, getWidth } from '../image/cropImage'
 
 const Avatar = ({
@@ -14,8 +15,8 @@ const Avatar = ({
   options,
 }: AvatarProps) => {
   const [src, setSrc] = useState<string>(avatarSrc)
-  // const [imageWidth, setImageWidth] = useState<number>(5)
-  // const [imageHeight, setImageHeight] = useState<number>(5)
+  const [imageWidth, setImageWidth] = useState<number>(5)
+  const [imageHeight, setImageHeight] = useState<number>(5)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const side: number = avatarSide
 
@@ -32,8 +33,10 @@ const Avatar = ({
       return
     }
     const url: string = URL.createObjectURL(avatarFile)
-    // setImageWidth(getWidth(url))
-    // setImageHeight(getHeight(url))
+    // const image = await getImageSide(avatarFile)
+    // setImageWidth(image.width)
+    // setImageHeight(image.height)
+    // setSrc(image.src)
     setSrc(url)
     URL.revokeObjectURL
     // event.preventDefault()
@@ -60,8 +63,8 @@ const Avatar = ({
         modalHeight={360}
         src={src}
         setSrc={setSrc}
-        // imageWidth={avatarSide}
-        // imageHeight={avatarSide}
+        imageWidth={imageWidth}
+        imageHeight={imageHeight}
         cropAspect={1 / 1}
         cropCircle={true}
       />
@@ -83,7 +86,7 @@ const Avatar = ({
           accept='image/*'
           {...register(name, {
             onChange: (e: ChangeEvent<HTMLInputElement>) => {
-              console.log(e)
+              // console.log(e)
               handleFile(e).then(() => {
                 setIsOpen(true)
                 e.preventDefault()

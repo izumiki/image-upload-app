@@ -1,17 +1,17 @@
 import { centerCrop, makeAspectCrop, PercentCrop } from 'react-image-crop'
 
-export const cropCenter = (src: string, percent: number, aspect: number) => {
-  getImage(src).then((image) => {
-    const width = image.width
-    const height = image.height
-    console.log('image', image)
-    console.log('width', width)
-    return centerCrop(
-      makeAspectCrop({ unit: '%', width: percent }, aspect, width, height),
-      width,
-      height
-    )
-  })
+export const cropCenter = (
+  percent: number,
+  width: number,
+  height: number,
+  aspect: number
+) => {
+  // aspect <= 1 ?
+  return centerCrop(
+    makeAspectCrop({ unit: '%', width: percent }, aspect, width, height),
+    width,
+    height
+  )
 }
 
 export const cropImage = (
@@ -50,16 +50,6 @@ export const cropImage = (
     'image/jpeg',
     0.85
   )
-}
-
-export const getImage = async (src: string) => {
-  const image: HTMLImageElement = new Image()
-  image.src = src
-  image.onload = () => {
-    console.log(image.width, image.height)
-  }
-
-  return image
 }
 
 // export const getHeight = (src: string) => {

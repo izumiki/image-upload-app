@@ -11,8 +11,8 @@ export type CropModalProps = {
   modalHeight: number
   src: string
   setSrc: (src: string) => void
-  // imageWidth: number,
-  // imageHeight: number,
+  imageWidth: number
+  imageHeight: number
   cropAspect: number
   cropCircle?: boolean
 }
@@ -24,14 +24,16 @@ const CropModal = ({
   modalHeight,
   src,
   setSrc,
-  // imageWidth,
-  // imageHeight,
+  imageWidth,
+  imageHeight,
   cropAspect,
   cropCircle = false,
 }: CropModalProps) => {
-  const [crop, setCrop] = useState<PercentCrop>(cropCenter(src, 90, cropAspect))
+  const [crop, setCrop] = useState<PercentCrop>(
+    cropCenter(100, imageWidth, imageHeight, cropAspect)
+  )
   const [completedCrop, setCompletedCrop] = useState<PercentCrop>(
-    cropCenter(src, 90, cropAspect)
+    cropCenter(100, imageWidth, imageHeight, cropAspect)
   )
   // console.log('crop', crop)
 
