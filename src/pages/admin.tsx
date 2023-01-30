@@ -1,4 +1,6 @@
 import { useUser } from '@supabase/auth-helpers-react'
+import Email from '../components/mail/Mail'
+import MailForm from '../components/mail/MailForm'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -32,8 +34,15 @@ export default function Admin() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className={styles.main}>
-        {loading ? <Spinner /> : <Account account={account} />}
+      <main className='flex w-full justify-center '>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className='w-auto '>
+            <Account account={account} />
+            <MailForm />
+          </div>
+        )}
       </main>
 
       <footer className={styles.footer}>
