@@ -8,4 +8,9 @@ module.exports = {
   images: {
     domains: ['ytprvohayrihqytdspfb.supabase.co'],
   },
+  experimental: {
+    fontLoaders: [
+      { loader: '@next/font/google', options: { subsets: ['latin'] } },
+    ],
+  },
 }
