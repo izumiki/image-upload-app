@@ -14,13 +14,16 @@ const MailFormInput = ({
   const error = errors[name]
   // const required = options.required
   return (
-    <div className='flex w-5/6 flex-wrap items-center justify-items-center px-4'>
+    <div className='flex w-full flex-wrap items-center justify-items-center'>
       {options.required ? (
-        <label  htmlFor={name}  className=' inline w-1/12 rounded-md bg-red-400 py-0.5 text-center text-xs font-bold text-white'>
+        <label
+          htmlFor={name}
+          className=' inline w-1/12 rounded-md bg-red-400 py-0.5 text-center text-xs font-bold text-white'
+        >
           必須
         </label>
       ) : (
-        <label  htmlFor={name}  className=' inline w-1/12  ' />
+        <label htmlFor={name} className=' inline w-1/12  ' />
       )}
       <label
         htmlFor={name}
@@ -36,30 +39,34 @@ const MailFormInput = ({
         className={`w-3/4 border-b-[1.5px] px-2 text-lg text-gray-800
         ${
           !error
-            ? 'border-black focus:bg-gray-200 focus:outline-none'
-            : ' border-red-600  focus:bg-gray-200 focus:outline-none'
+            ? 'border-black focus:bg-indigo-50 focus:outline-none'
+            : ' border-red-600  focus:bg-indigo-50 focus:outline-none'
         }`}
         {...register(name, options)}
       />
-      <label  htmlFor={name}  className=' inline w-3/12' />
+      <label htmlFor={name} className=' inline w-3/12' />
 
       {helpText ? (
-        <label  htmlFor={name}  className='px-2  w-6/12 text-xs text-slate-500   '>
-        {helpText}
+        <label
+          htmlFor={name}
+          className='w-6/12  px-2 text-xs text-slate-500   '
+        >
+          {helpText}
         </label>
-      )
-        : 
-        <label  htmlFor={name}  className='px-2 h-4  w-6/12' />
-      }
+      ) : (
+        <label htmlFor={name} className='h-4 w-6/12  px-2' />
+      )}
 
       {error ? (
-        <label className='px-2  text-xs w-3/12 text-red-600 text-right  ' htmlFor={name}>
-        入力してください 
+        <label
+          className='w-3/12  px-2 text-right text-xs text-red-600  '
+          htmlFor={name}
+        >
+          入力してください
         </label>
-      )
-        : 
-        <label className='px-2 h-4 w-3/12'            htmlFor={name} />
-      }
+      ) : (
+        <label className='h-4 w-3/12 px-2' htmlFor={name} />
+      )}
     </div>
 
     // {formState.errors && <p>This field is required</p>}

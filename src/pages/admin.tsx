@@ -34,11 +34,11 @@ export default function Admin() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className='flex w-full justify-center '>
+      <main className='flex w-full justify-center py-12 '>
         {loading ? (
           <Spinner />
         ) : (
-          <div className='w-auto '>
+          <div className='w-auto'>
             <Account account={account} />
             <MailForm />
           </div>

@@ -13,9 +13,9 @@ const MailFormTextarea = ({
   const { errors } = formState
   const error = errors[name]
   return (
-<div className='flex w-5/6 flex-wrap items-top justify-items-center px-4 '>
+    <div className='items-top flex w-full flex-wrap justify-items-center'>
       {options.required ? (
-        <label className=' inline w-1/12 h-5 rounded-md bg-red-400 py-0.5 text-center text-xs font-bold text-white'>
+        <label className=' inline h-5 w-1/12 rounded-md bg-red-400 py-0.5 text-center text-xs font-bold text-white'>
           必須
         </label>
       ) : (
@@ -32,35 +32,32 @@ const MailFormTextarea = ({
         id={name}
         type={type}
         maxLength={options.maxLength}
-        rows={4}
-        className={`w-3/4 border-b-[1.5px] px-2 text-lg text-gray-800 resize-none
+        rows={6}
+        className={`w-3/4 resize-none border-b-[1.5px] px-2 text-lg text-gray-800
         ${
           !error
-            ? 'border-black focus:bg-gray-200 focus:outline-none'
-            : ' border-red-600  focus:border-black focus:bg-gray-200 focus:outline-none'
+            ? 'border-black focus:bg-indigo-50 focus:outline-none'
+            : ' border-red-600  focus:border-black focus:bg-indigo-50 focus:outline-none'
         }`}
         {...register(name, options)}
       />
       <label className=' inline w-3/12 py-0.5 ' />
 
       {helpText ? (
-        <label className='px-2 py-0.5 w-6/12 text-xs text-slate-500   '>
-        {helpText}
+        <label className='w-6/12 px-2 py-0.5 text-xs text-slate-500   '>
+          {helpText}
         </label>
-      )
-        : 
-        <label className='px-2 py-0.5 w-6/12' />
-      }
+      ) : (
+        <label className='w-6/12 px-2 py-0.5' />
+      )}
 
       {error ? (
-
-        <label className='px-2 py-0.5 text-xs w-3/12 text-red-600 text-right  '>
-        入力してください
+        <label className='w-3/12 px-2 py-0.5 text-right text-xs text-red-600  '>
+          入力してください
         </label>
-      )
-        : 
-        <label className='px-2 py-0.5 w-3/12' />
-      }
+      ) : (
+        <label className='w-3/12 px-2 py-0.5' />
+      )}
     </div>
 
     // {formState.errors && <p>This field is required</p>}

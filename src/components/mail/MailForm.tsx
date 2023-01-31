@@ -10,10 +10,12 @@ const MailForm = () => {
 
   return (
     <form onSubmit={handleSubmit(sendMail)}>
-      <h1 className='mb-8 text-3xl font-bold '>Contact</h1>
+      <div className='flex flex-col items-center  gap-2 bg-gradient-to-br	from-stone-50 via-stone-100  to-stone-200 py-4 px-6 shadow-lg '>
+        <h1 className='mb-8 text-3xl font-bold underline decoration-teal-900 decoration-double decoration-1 underline-offset-2'>
+          Contact
+        </h1>
 
-      <div className=''>
-        <div className='flex flex-auto flex-col items-center justify-center justify-items-center gap-2'>
+        <div className='mb-4 flex w-full flex-auto flex-col items-center justify-center justify-items-center gap-2 py-6 px-4 outline-double outline-4 outline-offset-8 outline-teal-900'>
           <MailFormInput
             label='お名前'
             type='text'
@@ -84,8 +86,8 @@ const MailForm = () => {
 
           <button
             type='submit'
-            className='w-1/3 rounded bg-teal-500 py-2 px-4 font-bold text-white
-              hover:bg-teal-700 focus:outline-none'
+            className='mt-6 w-1/3 rounded bg-teal-900 py-2 px-4 font-bold text-white
+            hover:bg-teal-700 focus:outline-none'
           >
             送信
           </button>
