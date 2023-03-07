@@ -19,7 +19,6 @@ const MPLUS2 = M_PLUS_2({
   subsets: ['latin'],
 })
 
-
 export default function App({
   Component,
   pageProps,

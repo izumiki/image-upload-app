@@ -1,4 +1,4 @@
-import { RegisterOptions } from 'react-hook-form'
+import { FieldErrors, RegisterOptions } from 'react-hook-form'
 
 export type MailFormValues = {
   client: string
@@ -30,8 +30,8 @@ export type MailFormInputProps = {
     | 'budget'
     | 'deliveryDate'
     | 'isPublic'
-  register: UseFormRegister<AccountFormValues>
-  formState: FormState<AccountFormValues>
+  register: UseFormRegister<MailFormValues>
+  errors: FieldErrors<MailFormValues>
   options: RegisterOptions
 }
 

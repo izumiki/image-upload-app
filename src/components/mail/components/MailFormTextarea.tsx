@@ -7,10 +7,9 @@ const MailFormTextarea = ({
   helpText,
   name,
   register,
-  formState,
+  errors,
   options,
 }: MailFormInputProps) => {
-  const { errors } = formState
   const error = errors[name]
   return (
     <div className='items-top flex w-full flex-wrap justify-items-center'>
@@ -52,9 +51,22 @@ const MailFormTextarea = ({
       )}
 
       {error ? (
-        <label className='w-3/12 px-2 py-0.5 text-right text-xs text-red-600  '>
-          入力してください
-        </label>
+        (error.type === 'required' && (
+          <label
+            className='w-3/12  px-2 text-right text-xs text-red-600  '
+            htmlFor={name}
+          >
+            入力してください
+          </label>
+        )) ||
+        (error.type === 'maxLength' && (
+          <label
+            className='w-3/12  px-2 text-right text-xs text-red-600  '
+            htmlFor={name}
+          >
+            文字数が多すぎます
+          </label>
+        ))
       ) : (
         <label className='w-3/12 px-2 py-0.5' />
       )}

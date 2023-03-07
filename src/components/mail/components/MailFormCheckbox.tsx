@@ -6,10 +6,10 @@ const MailFormCheckbox = ({
   checkboxLabel,
   name,
   register,
-  formState,
+  errors,
   options,
 }: MailFormCheckboxProps & {}) => {
-  const { errors } = formState
+  // const { errors } = formState
   const error = errors[name]
   return (
     <div className='flex w-full flex-wrap '>

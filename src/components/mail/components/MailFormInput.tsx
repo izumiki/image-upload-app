@@ -7,10 +7,10 @@ const MailFormInput = ({
   helpText,
   name,
   register,
-  formState,
+  errors,
   options,
 }: MailFormInputProps) => {
-  const { errors } = formState
+  // const { errors } = formState
   const error = errors[name]
   // const required = options.required
   return (
@@ -58,12 +58,22 @@ const MailFormInput = ({
       )}
 
       {error ? (
-        <label
-          className='w-3/12  px-2 text-right text-xs text-red-600  '
-          htmlFor={name}
-        >
-          入力してください
-        </label>
+        (error.type === 'required' && (
+          <label
+            className='w-3/12  px-2 text-right text-xs text-red-600  '
+            htmlFor={name}
+          >
+            入力してください
+          </label>
+        )) ||
+        (error.type === 'maxLength' && (
+          <label
+            className='w-3/12  px-2 text-right text-xs text-red-600  '
+            htmlFor={name}
+          >
+            文字数が多すぎます
+          </label>
+        ))
       ) : (
         <label className='h-4 w-3/12 px-2' htmlFor={name} />
       )}
