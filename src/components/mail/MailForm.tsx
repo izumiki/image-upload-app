@@ -8,7 +8,6 @@ import ConfirmModal from './components/ConfirmModal'
 import { useEffect, useState } from 'react'
 
 const MailForm = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -16,12 +15,36 @@ const MailForm = () => {
     formState: { errors },
   } = useForm<MailFormValues>()
 
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [mailParams, setMailParams] = useState<MailFormValues>({
+    client: getValues('client'),
+    clientEmail: getValues('clientEmail'),
+    clientWebsite: getValues('clientWebsite'),
+    title: getValues('title'),
+    details: getValues('details'),
+    budget: getValues('budget'),
+    deliveryDate: getValues('deliveryDate'),
+    isPublic: getValues('isPublic'),
+  })
+
+  const openConfirmModal = () => {
+    const params: MailFormValues = {
+      client: getValues('client'),
+      clientEmail: getValues('clientEmail'),
+      clientWebsite: getValues('clientWebsite'),
+      title: getValues('title'),
+      details: getValues('details'),
+      budget: getValues('budget'),
+      deliveryDate: getValues('deliveryDate'),
+      isPublic: getValues('isPublic') ? '公開を望まない' : '公開してもよい',
+    }
+    console.log('params', params)
+    setMailParams(params)
+    setIsOpen(true)
+  }
+
   return (
-    <form
-      onSubmit={handleSubmit(() => {
-        setIsOpen(true)
-      })}
-    >
+    <form onSubmit={handleSubmit(openConfirmModal)}>
       <div className='flex flex-col items-center  gap-2 bg-gradient-to-br	from-stone-50 via-stone-100  to-stone-200 py-4 px-6 shadow-lg '>
         <h1 className='mb-8 text-3xl font-bold underline decoration-teal-900 decoration-double decoration-1 underline-offset-2'>
           Contact
@@ -31,9 +54,7 @@ const MailForm = () => {
           setIsOpen={setIsOpen}
           modalWidth={720}
           modalHeight={540}
-          register={register}
-          // handleSubmit={handleSubmit}
-          errors={errors}
+          params={mailParams}
         />
         <div className='mb-4 flex w-full flex-auto flex-col items-center justify-center justify-items-center gap-2 py-6 px-4 outline-double outline-4 outline-offset-8 outline-teal-900'>
           <MailFormInput

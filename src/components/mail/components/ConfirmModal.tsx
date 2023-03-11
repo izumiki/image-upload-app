@@ -14,8 +14,7 @@ export type ConfirmModalProps = {
   setIsOpen: (isOpen: boolean) => void
   modalWidth: number
   modalHeight: number
-  register: UseFormRegister<MailFormValues>
-  errors: FieldErrors<MailFormValues>
+  params: any
 }
 
 const ConfirmModal = ({
@@ -23,9 +22,7 @@ const ConfirmModal = ({
   setIsOpen,
   modalWidth,
   modalHeight,
-  register,
-  // handleSubmit,
-  errors,
+  params,
 }: ConfirmModalProps) => {
   const { getValues } = useForm<MailFormValues>()
 
@@ -59,7 +56,7 @@ const ConfirmModal = ({
         <button
           type='submit'
           onClick={() => {
-            sendMail()
+            sendMail(params)
             setIsOpen(false)
           }}
           className='mt-6 w-1/3 rounded bg-teal-900 py-2 px-4 font-bold text-white

@@ -22,11 +22,11 @@ export const sendMail = async (props: MailFormValues) => {
       deliveryDate: props.deliveryDate,
       isPublic: props.isPublic,
     }
-    console.log(params)
+    console.log('params', params)
 
     try {
       await send(serviceID, templateID, params)
-      console.log('送信成功')
+      alert('送信成功')
     } catch (error) {
       alert(error)
     }

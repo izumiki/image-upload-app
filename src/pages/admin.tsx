@@ -40,7 +40,9 @@ export default function Admin() {
         ) : (
           <div className='w-auto'>
             <Account account={account} />
-            <MailForm />
+            <div className='py-16'>
+              <MailForm />
+            </div>
           </div>
         )}
       </main>
