@@ -16,35 +16,10 @@ const MailForm = () => {
   } = useForm<MailFormValues>()
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [mailParams, setMailParams] = useState<MailFormValues>({
-    client: getValues('client'),
-    clientEmail: getValues('clientEmail'),
-    clientWebsite: getValues('clientWebsite'),
-    title: getValues('title'),
-    details: getValues('details'),
-    budget: getValues('budget'),
-    deliveryDate: getValues('deliveryDate'),
-    isPublic: getValues('isPublic'),
-  })
-
-  const openConfirmModal = () => {
-    const params: MailFormValues = {
-      client: getValues('client'),
-      clientEmail: getValues('clientEmail'),
-      clientWebsite: getValues('clientWebsite'),
-      title: getValues('title'),
-      details: getValues('details'),
-      budget: getValues('budget'),
-      deliveryDate: getValues('deliveryDate'),
-      isPublic: getValues('isPublic') ? '公開を望まない' : '公開してもよい',
-    }
-    console.log('params', params)
-    setMailParams(params)
-    setIsOpen(true)
-  }
+  const [mailParams, setMailParams] = useState<MailFormValues>()
 
   return (
-    <form onSubmit={handleSubmit(openConfirmModal)}>
+    <form onSubmit={handleSubmit(() => setIsOpen(true))}>
       <div className='flex flex-col items-center  gap-2 bg-gradient-to-br	from-stone-50 via-stone-100  to-stone-200 py-4 px-6 shadow-lg '>
         <h1 className='mb-8 text-3xl font-bold underline decoration-teal-900 decoration-double decoration-1 underline-offset-2'>
           Contact
@@ -54,7 +29,9 @@ const MailForm = () => {
           setIsOpen={setIsOpen}
           modalWidth={720}
           modalHeight={540}
-          params={mailParams}
+          // params={mailParams}
+          // register={register}
+          getValues={getValues}
         />
         <div className='mb-4 flex w-full flex-auto flex-col items-center justify-center justify-items-center gap-2 py-6 px-4 outline-double outline-4 outline-offset-8 outline-teal-900'>
           <MailFormInput
@@ -130,13 +107,7 @@ const MailForm = () => {
             // disabled={!Object.keys(dirtyFields).length}
             className='mt-6 w-1/3 rounded bg-teal-900 py-2 px-4 font-bold text-white
             hover:bg-teal-700 focus:outline-none'
-            // onClick={() => {
-            // console.log('dity', !Object.keys(dirtyFields).length)
-            // console.log('errors' && errors)
-            // console.log('errorsLength' && Object.keys(errors).length)
-            // console.log(getValues('clientEmail'))
-            // !Object.keys(errors).length && setIsOpen(true)
-            // }}
+            // onClick={() => setIsOpen(true)}
           >
             確認
           </button>
