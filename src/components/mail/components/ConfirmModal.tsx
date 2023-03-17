@@ -10,8 +10,9 @@ import {
 import { MailFormValues } from '../../../types/mail'
 import { sendMail } from '../sendMail'
 import MailForm from '../MailForm'
-import MailFormItem from './MailFormItem'
+import ConfirmItem from './ConfirmItem'
 import Spinner from '../../Sppiner'
+import ConfirmTextarea from './ConfirmTextarea'
 
 export type ConfirmModalProps = {
   isOpen: boolean
@@ -29,7 +30,6 @@ const ConfirmModal = ({
   modalHeight,
   getValues,
 }: ConfirmModalProps) => {
-
   const inputMailParams = () => {
     const params: MailFormValues = {
       client: getValues('client'),
@@ -49,32 +49,29 @@ const ConfirmModal = ({
       isOpen={isOpen}
       onRequestClose={() => setIsOpen(false)}
       contentLabel='Crop Modal'
-      className='mt-6 flex flex-auto flex-col items-center justify-center gap-6 
-      border-white bg-white'
+      className='relative m-auto mt-6 flex w-2/3 flex-col items-center justify-center  
+      gap-12 rounded-lg border-white bg-white'
+      overlayClassName='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
     >
-      <div>
+      <div className='mt-12 flex w-5/6 flex-auto flex-col items-start gap-6'>
+        <ConfirmItem label={'お名前'} name={getValues('client')} />
 
-        <MailFormItem
-          label={'お名前 : '}
-          name={getValues('client')}
+        <ConfirmItem label={'email'} name={getValues('clientEmail')} />
+
+        <ConfirmItem label={'website'} name={getValues('clientWebsite')} />
+
+        <ConfirmItem label={'件名'} name={getValues('title')} />
+
+        <ConfirmTextarea label={'詳細'} name={getValues('details')} />
+
+        <ConfirmItem label={'ご予算'} name={getValues('budget')} unit={'円'} />
+
+        <ConfirmItem label={'希望納期'} name={getValues('deliveryDate')} />
+
+        <ConfirmItem
+          label={'公開可否'}
+          name={getValues('isPublic') ? '公開を望まない' : '公開してもよい'}
         />
-
-        <MailFormItem
-          label={'email : '}
-          name={getValues('clientEmail')}
-        />
-
-        <MailFormItem
-          label={'件名 : '}
-          name={getValues('title')}
-        />
-
-        <MailFormItem
-          label={'詳細 : '}
-          name={getValues('details')}
-        />
-
-
       </div>
 
       <div className='flex flex-auto flex-row  justify-between gap-36'>

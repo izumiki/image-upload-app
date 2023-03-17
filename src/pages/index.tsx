@@ -17,7 +17,6 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-
         {/* <Login /> */}
         <MailForm />
         <ImageRegister />
