@@ -3,9 +3,10 @@ import { MailFormValues } from '../../types/mail'
 import MailFormInput from './components/MailFormInput'
 import { sendMail } from './sendMail'
 import MailFormTextarea from './components/MailFormTextarea'
-import MailFormCheckbox from './components/MailFormCheckbox'
+import MailFormRadio from './components/MailFormRadio'
 import ConfirmModal from './components/ConfirmModal'
 import { useEffect, useState } from 'react'
+import Spinner from '../Spinner'
 
 const MailForm = () => {
   const {
@@ -19,101 +20,142 @@ const MailForm = () => {
   const [mailParams, setMailParams] = useState<MailFormValues>()
 
   return (
-    <form onSubmit={handleSubmit(() => setIsOpen(true))}>
-      <div className='flex flex-col items-center  gap-2 bg-gradient-to-br	from-stone-50 via-stone-100  to-stone-200 py-4 px-6 shadow-lg '>
-        <h1 className='mb-8 text-3xl font-bold underline decoration-teal-900 decoration-double decoration-1 underline-offset-2'>
-          Contact
-        </h1>
-        <ConfirmModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          modalWidth={720}
-          modalHeight={540}
-          // params={mailParams}
-          // register={register}
-          getValues={getValues}
-        />
-        <div className='mb-4 flex w-full flex-auto flex-col items-center justify-center justify-items-center gap-2 py-6 px-4 outline-double outline-4 outline-offset-8 outline-teal-900'>
-          <MailFormInput
-            label='お名前'
-            type='text'
-            name='client'
-            register={register}
-            errors={errors}
-            options={{ required: true, maxLength: 15 }}
-          />
-          <MailFormInput
-            label='email'
-            type='email'
-            name='clientEmail'
-            register={register}
-            errors={errors}
-            options={{ required: true }}
-          />
-          <MailFormInput
-            label='website'
-            type='url'
-            name='clientWebsite'
-            register={register}
-            errors={errors}
-            options={{ required: false }}
-          />
-          <MailFormInput
-            label='件名'
-            type='text'
-            helpText='最大50字'
-            name='title'
-            register={register}
-            errors={errors}
-            options={{ required: true, maxLength: 50 }}
-          />
-          <MailFormTextarea
-            label='詳細'
-            type='text'
-            helpText='最大500字'
-            name='details'
-            register={register}
-            errors={errors}
-            options={{ required: true }}
-          />
-          <MailFormInput
-            label='ご予算'
-            type='text'
-            name='budget'
-            register={register}
-            errors={errors}
-            options={{ required: false }}
-          />
-          <MailFormInput
-            label='納期'
-            type='date'
-            name='deliveryDate'
-            register={register}
-            errors={errors}
-            options={{ required: false }}
-          />
-          <MailFormCheckbox
-            label='実績の公開'
-            type='chackbox'
-            name='isPublic'
-            checkboxLabel='公開を望まない'
-            register={register}
-            errors={errors}
-            options={{ required: false }}
-          />
+    <div className=' flex w-full max-w-3xl flex-col items-center gap-2 bg-gradient-to-br	from-stone-50 via-stone-100  to-stone-200 py-4 px-6 shadow-lg '>
+      <h1 className='mb-8 text-3xl font-bold underline decoration-teal-900 decoration-double decoration-1 underline-offset-2'>
+        Contact
+      </h1>
 
-          <button
-            type='submit'
-            // disabled={!Object.keys(dirtyFields).length}
-            className='mt-6 w-1/3 rounded bg-teal-900 py-2 px-4 font-bold text-white
-            hover:bg-teal-700 focus:outline-none'
-            // onClick={() => setIsOpen(true)}
-          >
-            確認
-          </button>
-        </div>
+      <ConfirmModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        getValues={getValues}
+      />
+      <div className='w-full '>
+        <form onSubmit={handleSubmit(() => setIsOpen(true))}>
+          <div className='mb-4 flex w-full flex-auto flex-col items-center justify-center justify-items-center gap-2 py-6 px-4 outline-double outline-4 outline-offset-8 outline-teal-900'>
+            <MailFormInput
+              label='お名前 / name'
+              type='text'
+              helpText='最大15文字'
+              name='client'
+              register={register}
+              errors={errors}
+              options={{
+                required: '入力してください',
+
+                maxLength: {
+                  value: 15,
+                  message: '文字数が多すぎます',
+                },
+              }}
+            />
+            <MailFormInput
+              label='email'
+              type='email'
+              name='clientEmail'
+              register={register}
+              errors={errors}
+              options={{ required: '入力してください',
+                pattern: {
+                value: /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
+                message: "メールアドレスを入力してください",
+              },}}
+            />
+            <MailFormInput
+              label='website'
+              type='url'
+              name='clientWebsite'
+              register={register}
+              errors={errors}
+              options={{ required: false,
+                pattern: {
+                value: /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/g,
+                message: "URLを入力してください",
+              }, }}
+            />
+            <MailFormInput
+              label='会社名 / company'
+              type='text'
+              name='clientCompany'
+              register={register}
+              errors={errors}
+              options={{ required: false }}
+            />
+            <MailFormInput
+              label='件名 / title'
+              type='text'
+              helpText='最大30文字'
+              name='title'
+              register={register}
+              errors={errors}
+              options={{
+                required: '入力してください',
+                maxLength: {
+                  value: 30,
+                  message: '文字数が多すぎます',
+                },
+              }}
+            />
+            <MailFormTextarea
+              label='詳細 / details'
+              type='text'
+              helpText='最大3000文字'
+              name='details'
+              register={register}
+              errors={errors}
+              options={{
+                required: '入力してください',
+                maxLength: {
+                  value: 3000,
+                  message: '文字数が多すぎます',
+                },
+              }}
+            />
+            <MailFormInput
+              label='ご予算 / budget'
+              type='text'
+              unit='円'
+              helpText='数字入力'
+              name='budget'
+              register={register}
+              errors={errors}
+              options={{
+                required: false,
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: '数字で入力してください',
+                },
+              }}
+            />
+            <MailFormInput
+              label='納期 / delivery date'
+              type='date'
+              name='deliveryDate'
+              register={register}
+              errors={errors}
+              options={{ required: false }}
+            />
+            <MailFormRadio
+              label='公開可否 / publisable'
+              type='chackbox'
+              helpText='実績としてのご依頼の公開について'
+              name='isPublic'
+              radioLabel={['公開してもよい', '公開を望まない']}
+              register={register}
+              errors={errors}
+              options={{ required: false }}
+            />
+            <button
+              type='submit'
+              className='mt-6 w-1/3 rounded bg-teal-900 py-2 px-4 font-bold text-white
+    hover:bg-teal-700 focus:outline-none'
+            >
+              確認
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   )
 }
 

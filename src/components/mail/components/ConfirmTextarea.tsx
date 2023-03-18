@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import Spinner from '../../Sppiner'
+import Spinner from '../../Spinner'
 
 type ConfirmTextareaProps = {
   label: string
@@ -31,9 +31,12 @@ const ConfirmTextarea = (props: ConfirmTextareaProps) => {
       </div>
 
       <div className='flex w-5/6 px-2'>
-        <textarea rows={8} className='w-full resize-none text-lg'>
-          {props.name}
-        </textarea>
+        <textarea
+          rows={6}
+          disabled={true}
+          defaultValue={props.name}
+          className='w-full resize-none bg-white text-lg'
+        />
         {/* <div className='text-right text-lg ml-2'>{props.name ? props.unit : ''}</div> */}
       </div>
     </div>

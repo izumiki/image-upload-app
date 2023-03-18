@@ -8,7 +8,7 @@ import Account from '../components/account/Account'
 import Login from '../components/account/auth/Login'
 import Logout from '../components/account/auth/Logout'
 import { fetchAccount } from '../components/account/connectAccountScheme'
-import Spinner from '../components/Sppiner'
+import Spinner from '../components/Spinner'
 import styles from '../styles/Home.module.css'
 import { AccountProps } from '../types/account'
 

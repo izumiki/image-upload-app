@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import Spinner from '../../Sppiner'
+import Spinner from '../../Spinner'
 
 type ConfirmItemProps = {
   label: string
@@ -31,7 +31,9 @@ const ConfirmItem = (props: ConfirmItemProps) => {
 
       <div className='flex w-5/6 px-2 '>
         <div className='text-lg'>{props.name}</div>
-        <div className='text-right text-lg ml-2'>{props.name ? props.unit : ''}</div>
+        <div className='ml-2 text-right text-lg'>
+          {props.name ? props.unit : ''}
+        </div>
       </div>
     </div>
   )

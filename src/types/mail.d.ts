@@ -3,6 +3,7 @@ import { FieldErrors, RegisterOptions } from 'react-hook-form'
 export type MailFormValues = {
   client: string
   clientEmail: string
+  clientCompany: string
   clientWebsite: string
   title: string
   details: string
@@ -20,11 +21,12 @@ export type MailFormInputProps = {
   label: string
   type?: string
   helpText?: string
-  // option?: RadioButtonOpition[]
+  unit?: string
   name:
     | 'client'
     | 'clientEmail'
     | 'clientWebsite'
+    | 'clientCompany'
     | 'title'
     | 'details'
     | 'budget'
@@ -35,6 +37,6 @@ export type MailFormInputProps = {
   options: RegisterOptions
 }
 
-export type MailFormCheckboxProps = MailFormInputProps & {
-  checkboxLabel: string
+export type MailFormRadioProps = MailFormInputProps & {
+  radioLabel: string[]
 }

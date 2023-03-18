@@ -1,39 +1,27 @@
-import { useCallback, useEffect, useState } from 'react'
 import Modal from 'react-modal'
-import {
-  UseFormRegister,
-  FormState,
-  FieldErrors,
-  useForm,
-  UseFormGetValues,
-} from 'react-hook-form'
+import { UseFormGetValues } from 'react-hook-form'
 import { MailFormValues } from '../../../types/mail'
 import { sendMail } from '../sendMail'
-import MailForm from '../MailForm'
 import ConfirmItem from './ConfirmItem'
-import Spinner from '../../Sppiner'
 import ConfirmTextarea from './ConfirmTextarea'
+import { useState } from 'react'
+import LoadingModal from './LoadingModal'
+import Spinner from '../../Spinner'
 
 export type ConfirmModalProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  modalWidth: number
-  modalHeight: number
-  // register: UseFormRegister<MailFormValues>
   getValues: UseFormGetValues<MailFormValues>
 }
 
-const ConfirmModal = ({
-  isOpen,
-  setIsOpen,
-  modalWidth,
-  modalHeight,
-  getValues,
-}: ConfirmModalProps) => {
-  const inputMailParams = () => {
+const ConfirmModal = ({ isOpen, setIsOpen, getValues }: ConfirmModalProps) => {
+  const [completed, setCompleted] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const inputMailParams = async () => {
     const params: MailFormValues = {
       client: getValues('client'),
       clientEmail: getValues('clientEmail'),
+      clientCompany: getValues('clientCompany'),
       clientWebsite: getValues('clientWebsite'),
       title: getValues('title'),
       details: getValues('details'),
@@ -41,22 +29,28 @@ const ConfirmModal = ({
       deliveryDate: getValues('deliveryDate'),
       isPublic: getValues('isPublic') ? '公開を望まない' : '公開してもよい',
     }
-    sendMail(params)
+    await sendMail(params)
   }
 
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={() => setIsOpen(false)}
-      contentLabel='Crop Modal'
-      className='relative m-auto mt-6 flex w-2/3 flex-col items-center justify-center  
-      gap-12 rounded-lg border-white bg-white'
+      contentLabel='Confirm Modal'
+      className={`relative m-auto mt-6 flex w-2/3 flex-col items-center justify-center  
+      gap-6 rounded-lg  border-white bg-white ${
+        isOpen ? 'animate-fade-in' : 'animate-fade-out'
+      }`}
       overlayClassName='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
+      ariaHideApp={false}
+      closeTimeoutMS={350}
     >
-      <div className='mt-12 flex w-5/6 flex-auto flex-col items-start gap-6'>
+      <div className='mt-12 flex w-2/3 flex-auto flex-col items-start gap-6'>
         <ConfirmItem label={'お名前'} name={getValues('client')} />
 
         <ConfirmItem label={'email'} name={getValues('clientEmail')} />
+
+        <ConfirmItem label={'company'} name={getValues('clientCompany')} />
 
         <ConfirmItem label={'website'} name={getValues('clientWebsite')} />
 
@@ -74,36 +68,46 @@ const ConfirmModal = ({
         />
       </div>
 
-      <div className='flex flex-auto flex-row  justify-between gap-36'>
-        {/* <div>
-          getValues('clientEmail')
-        </div> */}
-        <button
-          onClick={() => {
-            setIsOpen(false)
-          }}
-          className={`
-            hover: mb-8 flex h-auto w-24 cursor-pointer justify-center 
-            rounded bg-red-400 p-2 
-            font-bold text-white
-            hover:bg-red-600 focus:outline-none
+      <div className='flex w-1/2 flex-row items-center justify-center  p-8'>
+        <div className='flex w-1/2 justify-center '>
+          <button
+            onClick={() => {
+              setIsOpen(false)
+            }}
+            className={`
+            flex w-24 cursor-pointer 
+            justify-center rounded bg-red-400 
+            p-2 font-bold
+            text-white hover:bg-red-600 focus:outline-none
           `}
-        >
-          Cancel
-        </button>
-        <button
-          type='submit'
-          onClick={() => {
-            inputMailParams()
-            setIsOpen(false)
-          }}
-          className='mt-6 w-1/3 rounded bg-teal-900 py-2 px-4 font-bold text-white
+          >
+            Cancel
+          </button>
+        </div>
+
+        <div className='flex w-1/2 justify-center'>
+          <button
+            type='submit'
+            onClick={() => {
+              setCompleted(false)
+              setLoading(true)
+              inputMailParams().then(() => {
+                setCompleted(true)
+
+                setTimeout(() => {
+                  setLoading(false)
+                  setIsOpen(false)
+                }, 1000)
+              })
+            }}
+            className='w-24 items-center rounded  p-2 font-bold bg-teal-900 text-white
             hover:bg-teal-700 focus:outline-none'
-        >
-          送信
-        </button>
+          >
+            送信
+          </button>
+        </div>
       </div>
-      {/* </form> */}
+      <LoadingModal isOpen={loading} completed={completed} />
     </Modal>
   )
 }
