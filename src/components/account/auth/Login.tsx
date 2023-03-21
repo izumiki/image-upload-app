@@ -17,7 +17,7 @@ const Login = () => {
 
   return (
     <button
-      className='rounded-full bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700'
+      className='rounded-full bg-teal-500 py-2 px-4 font-bold text-white hover:bg-teal-700'
       onClick={() => login()}
     >
       Login

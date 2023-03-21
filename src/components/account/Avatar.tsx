@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { AvatarProps } from '../../types/account'
 import 'react-image-crop/dist/ReactCrop.css'
 import CropModal from '../image/CropModal'
+import { loadRegisterImage } from '../image/registerImage'
 // import { getImageSide } from '../image/cropImage'
 // import { getHeight, getWidth } from '../image/cropImage'
 
@@ -15,36 +16,35 @@ const Avatar = ({
   options,
 }: AvatarProps) => {
   const [src, setSrc] = useState<string>(avatarSrc)
+  const [newSrc, setNewSrc] = useState<string>(avatarSrc)
   const [imageWidth, setImageWidth] = useState<number>(5)
   const [imageHeight, setImageHeight] = useState<number>(5)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const side: number = avatarSide
 
-  //同じ画像を繰り返し読み込もうとした際に実行されない
   const handleFile = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !event.target.files.length) {
-      // alert('ファイルを選択してください。')
+      event.preventDefault()
       return
     }
-    const avatarFile: File = event.target.files[0]
+    const avatarFile: FileList = event.target.files
 
-    if (avatarFile.size > 1000000) {
+    if (avatarFile[0].size > 1000000) {
       alert('ファイルサイズは 1MB 以下にしてください.')
-      return
+      event.preventDefault()
+      throw Error
     }
-    const url: string = URL.createObjectURL(avatarFile)
-    // const image = await getImageSide(avatarFile)
-    // setImageWidth(image.width)
-    // setImageHeight(image.height)
-    // setSrc(image.src)
-    setSrc(url)
-    URL.revokeObjectURL
-    // event.preventDefault()
+    // const url: string = URL.createObjectURL(avatarFile)
+    const image = await loadRegisterImage(avatarFile)
+    setImageWidth(image.width)
+    setImageHeight(image.height)
+    setNewSrc(image.src)
+    event.target.value = ''
   }
 
   return (
     <div className='mb-24 h-64 w-64'>
-      {src ? (
+      {/* {src ? (
         <Image
           src={src}
           alt='avatar'
@@ -54,15 +54,15 @@ const Avatar = ({
         />
       ) : (
         <div className={`mb-4 h-64 w-64 rounded-full bg-slate-700`} />
-      )}
+      )} */}
 
       <CropModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        modalWidth={360}
-        modalHeight={360}
         src={src}
         setSrc={setSrc}
+        newSrc={newSrc}
+        setNewSrc={setNewSrc}
         imageWidth={imageWidth}
         imageHeight={imageHeight}
         cropAspect={1 / 1}
@@ -86,11 +86,7 @@ const Avatar = ({
           accept='image/*'
           {...register(name, {
             onChange: (e: ChangeEvent<HTMLInputElement>) => {
-              // console.log(e)
-              handleFile(e).then(() => {
-                setIsOpen(true)
-                e.preventDefault()
-              })
+              handleFile(e).then(() => setIsOpen(true))
             },
           })}
         />

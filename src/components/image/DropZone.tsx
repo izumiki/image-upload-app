@@ -4,10 +4,9 @@ import { DropZoneProps, RegisterImage } from '../../types/image'
 import { loadRegisterImage } from './registerImage'
 
 const DropZone = ({ setRegisterImage }: DropZoneProps) => {
-  const onDrop = async (file: FileList) => {
+  const onDrop = async (file: File[]) => {
     const image: RegisterImage = await loadRegisterImage(file)
     setRegisterImage(image)
-    // console.log(image)
   }
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: { 'image/png': ['.png', '.jpeg', '.jpg'] },

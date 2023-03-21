@@ -21,6 +21,8 @@ export const uploadImage = async (
     const { data: publicSrc } = supabase.storage
       .from(bucket)
       .getPublicUrl(imageKey)
+    
+    console.log(publicSrc)
 
     return publicSrc.publicUrl
   } catch (error) {

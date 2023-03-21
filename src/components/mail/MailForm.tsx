@@ -55,11 +55,13 @@ const MailForm = () => {
               name='clientEmail'
               register={register}
               errors={errors}
-              options={{ required: '入力してください',
+              options={{
+                required: '入力してください',
                 pattern: {
-                value: /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
-                message: "メールアドレスを入力してください",
-              },}}
+                  value: /[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
+                  message: 'メールアドレスを入力してください',
+                },
+              }}
             />
             <MailFormInput
               label='website'
@@ -67,11 +69,13 @@ const MailForm = () => {
               name='clientWebsite'
               register={register}
               errors={errors}
-              options={{ required: false,
+              options={{
+                required: false,
                 pattern: {
-                value: /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/g,
-                message: "URLを入力してください",
-              }, }}
+                  value: /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+/g,
+                  message: 'URLを入力してください',
+                },
+              }}
             />
             <MailFormInput
               label='会社名 / company'

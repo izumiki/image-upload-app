@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactCrop, { PercentCrop } from 'react-image-crop'
 import { cropCenter, cropImage } from './cropImage'
 import Modal from 'react-modal'
 import Image from 'next/image'
+import Spinner from '../Spinner'
 
 export type CropModalProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  modalWidth: number
-  modalHeight: number
   src: string
   setSrc: (src: string) => void
+  newSrc: string
+  setNewSrc: (src: string) => void
   imageWidth: number
   imageHeight: number
   cropAspect: number
@@ -20,10 +21,10 @@ export type CropModalProps = {
 const CropModal = ({
   isOpen,
   setIsOpen,
-  modalWidth,
-  modalHeight,
   src,
   setSrc,
+  newSrc,
+  setNewSrc,
   imageWidth,
   imageHeight,
   cropAspect,
@@ -35,15 +36,20 @@ const CropModal = ({
   const [completedCrop, setCompletedCrop] = useState<PercentCrop>(
     cropCenter(100, imageWidth, imageHeight, cropAspect)
   )
-  // console.log('crop', crop)
+  useEffect(() => {
+    setCrop(cropCenter(100, imageWidth, imageHeight, cropAspect))
+    setCompletedCrop(cropCenter(100, imageWidth, imageHeight, cropAspect))
+  }, [imageWidth, imageHeight, cropAspect])
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={() => setIsOpen(false)}
+      // onRequestClose={() => setIsOpen(false)}
       contentLabel='Crop Modal'
-      className='mt-6 flex flex-auto flex-col items-center justify-center gap-6 
-      border-white/0 bg-white/0'
+      className='flex h-full w-full flex-auto flex-col items-center justify-center gap-6 bg-white/0 
+      py-12'
+      overlayClassName='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
+      ariaHideApp={false}
     >
       <ReactCrop
         crop={crop}
@@ -54,14 +60,14 @@ const CropModal = ({
         onComplete={(_, percentCrop) => {
           setCompletedCrop(percentCrop)
         }}
-        className={cropCircle ? ' border-blue-600 ' : 'border-blue-600'}
         circularCrop={cropCircle}
       >
         <Image
-          src={src}
+          src={newSrc}
           alt='cropImage'
-          width={modalWidth}
-          height={modalHeight}
+          width={540}
+          height={540}
+          className={`${imageWidth >= imageHeight ? 'w-[540]' : 'h-[540]'}`}
         />
       </ReactCrop>
       <div className='flex flex-auto flex-row  justify-between gap-36'>
@@ -70,7 +76,7 @@ const CropModal = ({
             setIsOpen(false)
           }}
           className={`
-            hover: mb-8 flex h-auto w-24 cursor-pointer justify-center 
+            flex h-10 w-24 cursor-pointer justify-center 
             rounded bg-red-400 p-2 
             font-bold text-white
             hover:bg-red-600 focus:outline-none
@@ -80,12 +86,12 @@ const CropModal = ({
         </button>
         <button
           onClick={() => {
-            cropImage(src, setSrc, completedCrop)
+            cropImage(newSrc, setSrc, completedCrop)
             setIsOpen(false)
           }}
           className={`
-            hover: mb-8 flex h-auto w-24 cursor-pointer justify-center 
-            rounded bg-teal-500 py-2 px-2 
+            flex h-10 w-24 cursor-pointer justify-center 
+            rounded bg-teal-500 p-2 
             font-bold text-white
             hover:bg-teal-700 focus:outline-none
           `}

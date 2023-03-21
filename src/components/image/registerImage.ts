@@ -1,14 +1,14 @@
 import { RegisterImage } from '../../types/image'
 
-export const loadRegisterImage = async (files: FileList) => {
-  if (!files || !files.length) {
-    // alert('ファイルを選択してください。')
-    return
-  }
+export const loadRegisterImage = async (
+  files: File[] | FileList
+): Promise<RegisterImage> => {
+  // if (!files || !files.length) {
+
+  // }
   const file: File = files[0]
   if (file.size > 5000000) {
     alert('ファイルサイズは 5MB 以下にしてください.')
-    return
   }
   const fileName: string = file.name
   const fileSize: string = convertFileSize(file.size)

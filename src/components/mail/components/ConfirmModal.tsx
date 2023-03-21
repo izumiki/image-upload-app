@@ -100,7 +100,7 @@ const ConfirmModal = ({ isOpen, setIsOpen, getValues }: ConfirmModalProps) => {
                 }, 1000)
               })
             }}
-            className='w-24 items-center rounded  p-2 font-bold bg-teal-900 text-white
+            className='w-24 items-center rounded  bg-teal-900 p-2 font-bold text-white
             hover:bg-teal-700 focus:outline-none'
           >
             送信

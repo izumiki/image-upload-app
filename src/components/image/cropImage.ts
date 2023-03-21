@@ -6,12 +6,20 @@ export const cropCenter = (
   height: number,
   aspect: number
 ) => {
-  // aspect <= 1 ?
-  return centerCrop(
-    makeAspectCrop({ unit: '%', width: percent }, aspect, width, height),
+  const crop = centerCrop(
+    makeAspectCrop(
+      {
+        unit: '%',
+        width: percent,
+      },
+      aspect,
+      width,
+      height
+    ),
     width,
     height
   )
+  return crop
 }
 
 export const cropImage = (
@@ -29,7 +37,7 @@ export const cropImage = (
   // console.log('crossOrigin', image.crossOrigin) // crossOrigin設定 なんとかする.
   canvas.width = croppedImageWidth
   canvas.height = croppedImageHeight
-  const ctx: CanvasRenderingContext2D = canvas.getContext('2d')
+  const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!
   ctx.drawImage(
     image,
     croppedImageX,
@@ -44,6 +52,7 @@ export const cropImage = (
 
   canvas.toBlob(
     (blob: Blob) => {
+      // if (!blob) return
       const newSrc = URL.createObjectURL(blob)
       setSrc(newSrc)
     },

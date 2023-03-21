@@ -1,5 +1,4 @@
-import { useUser } from '@supabase/auth-helpers-react'
-import Email from '../components/mail/Mail'
+import { User, useUser } from '@supabase/auth-helpers-react'
 import MailForm from '../components/mail/MailForm'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -13,7 +12,7 @@ import styles from '../styles/Home.module.css'
 import { AccountProps } from '../types/account'
 
 export default function Admin() {
-  const user: User = useUser()
+  const user: User | null = useUser()
   const [account, setAccount] = useState<AccountProps>()
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -25,6 +24,8 @@ export default function Admin() {
       })
     }
   }, [user])
+
+  if (!account) return <Spinner />
 
   return (
     <div className={styles.container}>
@@ -40,9 +41,6 @@ export default function Admin() {
         ) : (
           <div className='w-auto'>
             <Account account={account} />
-            <div className='py-16'>
-              <MailForm />
-            </div>
           </div>
         )}
       </main>

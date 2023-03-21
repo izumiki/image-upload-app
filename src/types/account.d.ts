@@ -21,7 +21,7 @@ export type AccountFormValues = {
   username: string
   profile: string
   avatar_src: string
-  avatar_image: FileList
+  avatar_image:  File | Blob
 }
 
 export type AccountFormProps = {

@@ -7,7 +7,7 @@ import { createPath, uploadImage } from '../image/connectSrotage'
 export const fetchAccount = async (user: User) => {
   try {
     const { data, error } = await supabase
-      .from<Accounts>('accounts')
+      .from('accounts')
       .select(
         `
         id, 
@@ -41,20 +41,20 @@ export const updateAccount = async (data: AccountFormValues) => {
     const {
       data: { user },
     } = await supabase.auth.getUser()
-    const userEmail: string = user?.email
+    const userEmail: string = user?.email || ''
     const userStorageDir: string = userEmail.split('@')[0]
-    console.log(userStorageDir)
+    // console.log(userStorageDir)
     console.log('data', data)
-    console.log(data.avatar_image.length)
+    // console.log(data.avatar_image.length)
     const filePath: string = `${userStorageDir}/${createPath()}`
-    const avatarSrc: string = data.avatar_image.length
-      ? await uploadImage('avatars', filePath, data.avatar_image[0])
-      : undefined
+    const avatarSrc: string | undefined = data.avatar_image.length
+      ? await uploadImage('avatars', filePath, data.avatar_image)
+      : 'undefined'
 
     console.log('avatarSrc', avatarSrc)
 
     const { error } = await supabase
-      .from<Accounts>('accounts')
+      .from('accounts')
       .update({
         name: data.username,
         profile: data.profile,
