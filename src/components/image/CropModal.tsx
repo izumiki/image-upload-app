@@ -25,6 +25,7 @@ const CropModal = ({
   setSrc,
   newSrc,
   setNewSrc,
+  // setValue,
   imageWidth,
   imageHeight,
   cropAspect,
@@ -87,7 +88,7 @@ const CropModal = ({
         <button
           onClick={() => {
             cropImage(newSrc, setSrc, completedCrop)
-            setIsOpen(false)
+            setIsOpen(false)   
           }}
           className={`
             flex h-10 w-24 cursor-pointer justify-center 

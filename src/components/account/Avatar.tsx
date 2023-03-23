@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { AvatarProps } from '../../types/account'
 import 'react-image-crop/dist/ReactCrop.css'
 import CropModal from '../image/CropModal'
@@ -12,7 +12,6 @@ const Avatar = ({
   avatarSide,
   name,
   register,
-  formState,
   options,
 }: AvatarProps) => {
   const [src, setSrc] = useState<string>(avatarSrc)
@@ -27,9 +26,9 @@ const Avatar = ({
       event.preventDefault()
       return
     }
-    const avatarFile: FileList = event.target.files
+    const avatarFile: File = event.target.files[0]
 
-    if (avatarFile[0].size > 1000000) {
+    if (avatarFile.size > 1000000) {
       alert('ファイルサイズは 1MB 以下にしてください.')
       event.preventDefault()
       throw Error
@@ -39,6 +38,7 @@ const Avatar = ({
     setImageWidth(image.width)
     setImageHeight(image.height)
     setNewSrc(image.src)
+    console.log(image)
     event.target.value = ''
   }
 
@@ -82,11 +82,17 @@ const Avatar = ({
         <input
           type='file'
           id={name}
+          ref={useRef<HTMLInputElement>()}
           className='hidden'
           accept='image/*'
           {...register(name, {
             onChange: (e: ChangeEvent<HTMLInputElement>) => {
-              handleFile(e).then(() => setIsOpen(true))
+              handleFile(e).then(() => {
+                setIsOpen(true)
+                e.preventDefault()
+
+                // setValue('avatar_image', res)
+              })
             },
           })}
         />

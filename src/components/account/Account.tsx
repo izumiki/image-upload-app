@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { AccountProps } from '../../types/account'
 import { AccountFormValues } from '../../types/form'
@@ -7,7 +8,7 @@ import Avatar from './Avatar'
 import { updateAccount } from './connectAccountScheme'
 
 const Account = ({ account }: { account: AccountProps }) => {
-  const { register, handleSubmit, formState, getValues } = useForm<AccountFormValues>({
+  const { register, handleSubmit, formState, getValues, setValue, watch} = useForm<AccountFormValues>({
     defaultValues: {
       email: account.email,
       username: account.username,
@@ -15,8 +16,9 @@ const Account = ({ account }: { account: AccountProps }) => {
     },
   })
 
-  console.log(getValues('avatar_src'))
-  console.log(getValues('avatar_image'))
+  useEffect(() => {
+    console.log(getValues('avatar_image'))
+  }, [formState])
   return (
     <form onSubmit={handleSubmit(updateAccount)}>
       <h1 className='mb-12 text-3xl font-bold '>Admin Page</h1>

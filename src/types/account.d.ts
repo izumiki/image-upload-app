@@ -1,3 +1,5 @@
+import { UseFormSetValue } from 'react-hook-form'
+
 export interface AccountProps {
   id: string
   email: string
@@ -40,5 +42,6 @@ export type AvatarProps = {
   // setAvatarSrc: () => void
   register: UseFormRegister<AccountFormValues>
   formState: FormState<AccountFormValues>
+  // setValue: UseFormSetValue<AccountFormValues>
   options: Object
 }
