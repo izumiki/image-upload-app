@@ -1,13 +1,30 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import Login from '../components/account/auth/Login'
 import Logout from '../components/account/auth/Logout'
+import { fetchAccount } from '../components/account/connectAccountScheme'
+import Profile from '../components/account/Profile'
 // import DropZone from '../components/image/DropZone'
 import ImageRegister from '../components/image/ImageRegister'
 import MailForm from '../components/mail/MailForm'
+import Spinner from '../components/Spinner'
 import styles from '../styles/Home.module.css'
+import { AccountProps } from '../types/account'
 
 export default function Home() {
+  const email: string = 'izumiki514@gmail.com'
+  const [profile, setProfile] = useState<AccountProps>()
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    fetchAccount(email).then((res) => {
+      setProfile(res)
+    })
+  }, [email])
+
+  if (!profile) return <Spinner />
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +34,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <Profile profile={profile} />
         <Login />
       </main>
 

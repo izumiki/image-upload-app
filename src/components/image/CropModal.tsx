@@ -3,15 +3,13 @@ import ReactCrop, { PercentCrop } from 'react-image-crop'
 import { cropCenter, cropImage } from './cropImage'
 import Modal from 'react-modal'
 import Image from 'next/image'
-import Spinner from '../Spinner'
 
 export type CropModalProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  src: string
-  setSrc: (src: string) => void
   newSrc: string
-  setNewSrc: (src: string) => void
+  setSrc: (src: string) => void
+  setImg: (img: Blob | File) => void
   imageWidth: number
   imageHeight: number
   cropAspect: number
@@ -21,11 +19,9 @@ export type CropModalProps = {
 const CropModal = ({
   isOpen,
   setIsOpen,
-  src,
-  setSrc,
   newSrc,
-  setNewSrc,
-  // setValue,
+  setSrc,
+  setImg,
   imageWidth,
   imageHeight,
   cropAspect,
@@ -37,6 +33,7 @@ const CropModal = ({
   const [completedCrop, setCompletedCrop] = useState<PercentCrop>(
     cropCenter(100, imageWidth, imageHeight, cropAspect)
   )
+
   useEffect(() => {
     setCrop(cropCenter(100, imageWidth, imageHeight, cropAspect))
     setCompletedCrop(cropCenter(100, imageWidth, imageHeight, cropAspect))
@@ -87,8 +84,8 @@ const CropModal = ({
         </button>
         <button
           onClick={() => {
-            cropImage(newSrc, setSrc, completedCrop)
-            setIsOpen(false)   
+            cropImage(newSrc, setSrc, setImg, completedCrop)
+            setIsOpen(false)
           }}
           className={`
             flex h-10 w-24 cursor-pointer justify-center 

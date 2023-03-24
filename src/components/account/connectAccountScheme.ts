@@ -4,7 +4,7 @@ import { AccountProps, Accounts, AccountFormValues } from '../../types/account'
 import supabase from '../../utils/supabaseClient'
 import { createPath, uploadImage } from '../image/connectSrotage'
 
-export const fetchAccount = async (user: User) => {
+export const fetchAccount = async (userEmail: string) => {
   try {
     const { data, error } = await supabase
       .from('accounts')
@@ -19,7 +19,7 @@ export const fetchAccount = async (user: User) => {
         created_at
       `
       )
-      .eq('id', user.id)
+      .eq('email', userEmail)
       .single()
 
     if (error) throw error
@@ -43,15 +43,11 @@ export const updateAccount = async (data: AccountFormValues) => {
     } = await supabase.auth.getUser()
     const userEmail: string = user?.email || ''
     const userStorageDir: string = userEmail.split('@')[0]
-    // console.log(userStorageDir)
-    console.log('data', data)
-    // console.log(data.avatar_image.length)
     const filePath: string = `${userStorageDir}/${createPath()}`
+
     const avatarSrc: string | undefined = data.avatar_image.length
       ? await uploadImage('avatars', filePath, data.avatar_image)
-      : 'undefined'
-
-    console.log('avatarSrc', avatarSrc)
+      : data.avatar_src
 
     const { error } = await supabase
       .from('accounts')

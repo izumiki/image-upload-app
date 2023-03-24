@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { centerCrop, makeAspectCrop, PercentCrop } from 'react-image-crop'
 
 export const cropCenter = (
@@ -26,8 +25,9 @@ export const cropCenter = (
 export const cropImage = (
   src: string,
   setSrc: (src: string) => void,
+  setImg: (img: Blob | File) => void,
   completedCrop: PercentCrop
-): Blob => {
+) => {
   const image: HTMLImageElement = new Image()
   image.src = src
   const croppedImageWidth: number = (completedCrop.width * image.width) / 100
@@ -52,23 +52,13 @@ export const cropImage = (
   )
 
   canvas.toBlob(
-    (blob: Blob) => {
-      // if (!blob) return
+    (blob: Blob | null) => {
+      if (!blob) return
       const newSrc = URL.createObjectURL(blob)
       setSrc(newSrc)
-      // console.log(Blob)
-      // return Blob
+      setImg(blob)
     },
     'image/jpeg',
     0.85
   )
 }
-
-// export const getHeight = (src: string) => {
-//   console.log(src)
-//   const image: HTMLImageElement  = new Image()
-//   image.src = src
-//   console.log('image',image)
-//   console.log('height',image.height)
-//   return image.height
-// }

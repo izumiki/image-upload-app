@@ -1,8 +1,9 @@
 import { RegisterImage } from '../../types/image'
 
 export const loadRegisterImage = async (
-  file: File
+  fileList: FileList | File[]
 ): Promise<RegisterImage> => {
+  const file = fileList[0]
   const fileName: string = file.name
   const fileSize: string = convertFileSize(file.size)
   const imageFile: HTMLImageElement = await getImageElement(file)
@@ -17,10 +18,11 @@ export const loadRegisterImage = async (
   return image
 }
 
-export const getImageElement = async (file: File) => {
+export const getImageElement = async (
+  file: File
+): Promise<HTMLImageElement> => {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image()
-
     image.onload = () => {
       URL.revokeObjectURL
       resolve(image)

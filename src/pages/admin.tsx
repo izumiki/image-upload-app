@@ -18,7 +18,9 @@ export default function Admin() {
 
   useEffect(() => {
     if (user) {
-      fetchAccount(user).then((res) => {
+      const email: string = user.email || ''
+      console.log('email', email)
+      fetchAccount(email).then((res) => {
         setAccount(res)
         setLoading(false)
       })
@@ -35,11 +37,11 @@ export default function Admin() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className='flex w-full justify-center py-12 '>
+      <main className='flex w-full justify-center p-12'>
         {loading ? (
           <Spinner />
         ) : (
-          <div className='w-auto'>
+          <div>
             <Account account={account} />
           </div>
         )}

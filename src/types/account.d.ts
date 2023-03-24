@@ -1,4 +1,4 @@
-import { UseFormSetValue } from 'react-hook-form'
+import { UseFormGetValues, UseFormSetValue } from 'react-hook-form'
 
 export interface AccountProps {
   id: string
@@ -23,7 +23,7 @@ export type AccountFormValues = {
   username: string
   profile: string
   avatar_src: string
-  avatar_image:  File | Blob
+  avatar_image: Blob | File
 }
 
 export type AccountFormProps = {
@@ -41,7 +41,5 @@ export type AvatarProps = {
   name: 'avatar_image'
   // setAvatarSrc: () => void
   register: UseFormRegister<AccountFormValues>
-  formState: FormState<AccountFormValues>
-  // setValue: UseFormSetValue<AccountFormValues>
-  options: Object
+  setValue: UseFormSetValue<AccountFormValues>
 }
