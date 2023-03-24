@@ -20,9 +20,9 @@ const Profile = ({ profile }: { profile: AccountProps }) => {
             <div className='h-full w-full rounded-full' />
           )}
         </div>
-        <div className='flex h-96 w-auto flex-col flex-wrap gap-6'>
-          <div className='text-2xl'>{profile.username}</div>
-          <div className='whitespace-pre text-lg'>{profile.profile}</div>
+        <div className='flex h-96 w-auto flex-col flex-wrap items-start justify-center gap-6'>
+          <div className='text-3xl'>{profile.username}</div>
+          <div className='whitespace-pre text-xl'>{profile.profile}</div>
         </div>
       </div>
     </div>

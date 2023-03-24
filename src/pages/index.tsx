@@ -33,22 +33,30 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className={styles.main}>
+      <main className='flex w-full flex-col items-center justify-center gap-8'>
         <Profile profile={profile} />
-        <Login />
+        <MailForm />
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-          </span>
-        </a>
+      <footer className='mt-12 flex flex-row items-end justify-between border-t border-stone-500 p-4'>
+        <div className='flex flex-row items-center'>
+          <a
+            href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Powered by{' '}
+            <span className={styles.logo}>
+              <Image
+                src='/vercel.svg'
+                alt='Vercel Logo'
+                width={72}
+                height={16}
+              />
+            </span>
+          </a>
+        </div>
+        <Login />
       </footer>
     </div>
   )

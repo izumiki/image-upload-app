@@ -44,11 +44,9 @@ export const updateAccount = async (data: AccountFormValues) => {
     const userEmail: string = user?.email || ''
     const userStorageDir: string = userEmail.split('@')[0]
     const filePath: string = `${userStorageDir}/${createPath()}`
-
-    const avatarSrc: string | undefined = data.avatar_image.length
+    const avatarSrc: string | undefined = data.avatar_image.type
       ? await uploadImage('avatars', filePath, data.avatar_image)
       : data.avatar_src
-
     const { error } = await supabase
       .from('accounts')
       .update({

@@ -7,6 +7,7 @@ import MailFormRadio from './components/MailFormRadio'
 import ConfirmModal from './components/ConfirmModal'
 import { useEffect, useState } from 'react'
 import Spinner from '../Spinner'
+import { RemoveScroll } from 'react-remove-scroll'
 
 const MailForm = () => {
   const {
@@ -25,11 +26,14 @@ const MailForm = () => {
         Contact
       </h1>
 
-      <ConfirmModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        getValues={getValues}
-      />
+      <RemoveScroll removeScrollBar={false} enabled={isOpen}>
+        <ConfirmModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          getValues={getValues}
+        />
+      </RemoveScroll>
+
       <div className='w-full '>
         <form onSubmit={handleSubmit(() => setIsOpen(true))}>
           <div className='mb-4 flex w-full flex-auto flex-col items-center justify-center justify-items-center gap-2 py-6 px-4 outline-double outline-4 outline-offset-8 outline-teal-900'>
