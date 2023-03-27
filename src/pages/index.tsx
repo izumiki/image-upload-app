@@ -13,7 +13,7 @@ import styles from '../styles/Home.module.css'
 import { AccountProps } from '../types/account'
 
 export default function Home() {
-  const email: string = 'chorefuji@gmail.com'
+  const email: string = 'izumiki514@gmail.com'
   const [profile, setProfile] = useState<AccountProps>()
   const [loading, setLoading] = useState<boolean>(true)
 
