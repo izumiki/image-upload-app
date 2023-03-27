@@ -6,7 +6,7 @@ const Login = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://image-upload-app.vercel.app/admin' 
+          redirectTo: 'https://image-upload-app.vercel.app/admin',
         },
       })
       if (error) throw error
